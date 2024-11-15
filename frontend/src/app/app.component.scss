@@ -1,0 +1,62 @@
+// Estilos generales
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(35, 34, 34);
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #000000; // Fondo oscuro para toda la app
+    color: #e0e0e0; // Texto en gris claro para mejor contraste
+  }
+  
+  // Encabezado
+  header {
+    background-color: #1f1f1f; // Gris oscuro para el encabezado
+    padding: 1rem;
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      color: #9e9e9e; // Gris intermedio para el logo
+      text-decoration: none;
+      font-size: 1.5rem;
+    }
+  
+    .nav-menu a {
+      color: #e0e0e0; // Gris claro para los enlaces
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 1rem;
+      transition: color 0.3s;
+  
+      &:hover {
+        color: #b0bec5; // Gris más claro al pasar el mouse
+      }
+    }
+  }
+  
+  // Contenido principal
+  main {
+    padding: 2rem;
+    text-align: center;
+  
+    .intro {
+      background-color: #1c1c1c; // Fondo gris oscuro para el contenedor principal
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // Sombra para dar profundidad
+    }
+  
+    h2 {
+      color: #bdbdbd; // Gris claro para los títulos
+      margin-bottom: 1rem;
+    }
+  }
+  
