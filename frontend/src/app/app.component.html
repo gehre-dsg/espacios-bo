@@ -1,11 +1,11 @@
 <header>
   <nav>
-    <a class="logo" href="index.html"><h1>Espacios Bolivia</h1></a>
+    <a class="logo" routerLink="/"><h1>Espacios Bolivia</h1></a>
     <div class="nav-menu">
-      <a href="login.html">Iniciar Sesión</a>
-      <a href="#">Sobre Nosotros</a>
-      <a href="#">Servicios</a>
-      <a href="#">Contacto</a>
+      <a routerLink="/login">Iniciar Sesión</a>
+      <a routerLink="/about">Sobre Nosotros</a>
+      <a routerLink="/services">Servicios</a>
+      <a routerLink="/contact">Contacto</a>
     </div>
   </nav>
 </header>
@@ -15,7 +15,6 @@
     <h2>Vista Previa de Eventos</h2>
     <h2>Calendario</h2>
   </section>
-  
-  <router-outlet>
-  </router-outlet>
+
+  <router-outlet></router-outlet>
 </main>
