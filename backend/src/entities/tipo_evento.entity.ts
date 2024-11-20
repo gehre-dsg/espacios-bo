@@ -8,3 +8,5 @@ export class TipoEvento {
   @Column({ length: 100 })
   tipo_evento: string;
 }
+
+// Deberia ser datos estaticos

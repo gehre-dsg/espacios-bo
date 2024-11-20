@@ -8,3 +8,5 @@ export class Role {
   @Column({ length: 15 })
   rol: string;
 }
+
+// Deberia ser datos estaticos
