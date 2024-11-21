@@ -27,10 +27,5 @@ El equipo de desarrollo se organizó de la siguiente manera:
 - **[Nombre del integrante 4]:** Creación de la interfaz gráfica (frontend).
 - **[Nombre del integrante 5]:** Pruebas y documentación del proyecto.
 
-## Instrucciones de Instalación
-1. Clona este repositorio:
-   ```bash
-   git clone https://github.com/tu_usuario/Proyecto_Final_Sis_Info.git
-
 ## Contribución
 Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para discutir cambios importantes.
