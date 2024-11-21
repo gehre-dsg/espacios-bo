@@ -24,7 +24,7 @@ El equipo de desarrollo se organizó de la siguiente manera:
 - **[Nombre del integrante 1]:** Desarrollo del módulo de usuarios (registro y autenticación).
 - **[Nombre del integrante 2]:** Implementación del sistema de reservas (consultar disponibilidad, reservar y cancelar).
 - **[Nombre del integrante 3]:** Configuración de la base de datos y la integración con el backend.
-- **[Nombre del integrante 4]:** Creación de la interfaz gráfica (frontend).
+- **[Nombre del integrante 4]:** Creación de la interfaz gráfica.
 - **[Nombre del integrante 5]:** Pruebas y documentación del proyecto.
 
 ## Contribución
