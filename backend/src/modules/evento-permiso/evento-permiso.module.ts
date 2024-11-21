@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventoPermiso } from '../../entities/evento-permiso.entity';
+import { EventoPermiso } from '../../entities/evento_permiso.entity';
 import { EventoPermisoService } from './evento-permiso.service';
 import { EventoPermisoController } from './evento-permiso.controller';
 
