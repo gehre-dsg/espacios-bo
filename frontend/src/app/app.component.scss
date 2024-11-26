@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #f3e7f7; /* Fondo suave lila claro para toda la página */
+  background-color: #0c0c0c; /* Fondo suave lila claro para toda la página */
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 
 /* Encabezado */
 header {
-  background-color: #7e4e92; /* Lila oscuro para el encabezado */
+  background-color: #1d1e1e; /* Lila oscuro para el encabezado */
   padding: 1rem;
 }
 
@@ -25,13 +25,13 @@ nav {
 }
 
 .logo {
-  color: #580052; /* Blanco para el logo, mejora el contraste */
+  color: #ffffff; /* Blanco para el logo, mejora el contraste */
   text-decoration: none;
   font-size: 1.5rem;
 }
 
 .nav-menu a {
-  color: #580052; /* Blanco para los enlaces */
+  color: #ffffff; /* Blanco para los enlaces */
   text-decoration: none;
   margin: 0 1rem;
   font-size: 1rem;
@@ -56,7 +56,7 @@ main {
 }
 
 h2 {
-  color: #3b0a45; /* Lila muy oscuro para los títulos */
+  color: #b71dd6; /* Lila muy oscuro para los títulos */
   margin-bottom: 1rem;
   font-size: 1.5rem; /* Títulos un poco más grandes para mejor legibilidad */
 }

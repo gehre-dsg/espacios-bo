@@ -1,20 +1,6 @@
-<header>
-  <nav>
-    <a class="logo" routerLink="/"><h1>Espacios Bolivia</h1></a>
-    <div class="nav-menu">
-      <a routerLink="/login">Iniciar Sesión</a>
-      <a routerLink="/about">Sobre Nosotros</a>
-      <a routerLink="/services">Servicios</a>
-      <a routerLink="/contact">Contacto</a>
-    </div>
-  </nav>
-</header>
-
-<main>
-  <section class="intro">
-    <h2>Vista Previa de Eventos</h2>
-    <h2>Calendario</h2>
-  </section>
-
-  <router-outlet></router-outlet>
-</main>
+<div class="flex flex-col min-h-screen">
+  <app-header></app-header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>
