@@ -1,0 +1,31 @@
+<section class="nosotros-container">
+    <h1 class="title">Sobre Nosotros</h1>
+    <p class="description">
+      {{ platformName }} es una plataforma digital diseñada para optimizar la gestión y reserva de espacios públicos en Cochabamba.  
+      Nuestro propósito es: <strong>{{ purpose }}</strong>
+    </p>
+  
+    <div class="values-section">
+      <h2 class="subtitle">Nuestros Valores</h2>
+      <ul class="values-list">
+        <li *ngFor="let value of values; index as i" (click)="openModal(i)">
+          <img [src]="value.icon" [alt]="value.title" class="icon">
+          <div class="value-content">
+            <strong>{{ value.title }}</strong>
+            <p>{{ value.description }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal" *ngIf="isModalOpen">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <img [src]="selectedValue?.icon" [alt]="selectedValue?.title" class="modal-icon">
+        <h2>{{ selectedValue?.title }}</h2>
+        <p>{{ selectedValue?.description }}</p>
+      </div>
+    </div>
+  </section>
+  

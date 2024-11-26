@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Necesario para ngModel y ngForm
-import { RouterModule } from '@angular/router'; // Para manejar rutas
+import { FormsModule } from '@angular/forms';  // Import FormsModule
+import { routes } from './app.routes';
 
 import { AppComponent } from './app.component';
+import { ContactComponent } from './contact/contact.component';  // Ensure ContactComponent is declared
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-
-import { appRoutes } from './app.routes'; // Asegúrate de que este archivo exista y exporte las rutas correctamente
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
-    AppComponent,  // Declarar el componente raíz
-    LoginComponent, // Declarar el componente de login
-    HomeComponent,  // Declarar el componente de inicio
+    AppComponent,
+    ContactComponent,  // Declare ContactComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
-    BrowserModule,  // Módulo base para aplicaciones web
-    FormsModule,    // Habilitar ngModel y formularios
-    RouterModule.forRoot(appRoutes), // Configurar las rutas
+    BrowserModule,
+    FormsModule,  // Add FormsModule to the imports array
+    routes,
   ],
   providers: [],
-  bootstrap: [AppComponent], // Componente que se carga al iniciar la aplicación
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

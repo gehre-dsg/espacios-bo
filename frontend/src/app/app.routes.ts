@@ -1,12 +1,16 @@
-// src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NosotrosComponent } from './nosotros/nosotros.component';
+import { ContactComponent } from './contact/contact.component';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 
-export const appRoutes: Routes = [
-  { path: '', component: HomeComponent }, // Ruta principal (Home)
-  { path: 'login', component: LoginComponent }, // Ruta para el login
-  { path: '**', redirectTo: '' } // Redirige a Home si la ruta no existe
+export const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirige a la página de inicio
+  { path: 'login', component: LoginComponent },
+  { path: 'nosotros', component: NosotrosComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: '', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 ];
