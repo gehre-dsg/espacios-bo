@@ -25,17 +25,17 @@ export class EventoPermisoController {
     @Body('id_permiso') id_permiso: number,    // Extraemos id_permiso del cuerpo
     @Body('documento') documento: Buffer,      // Extraemos documento del cuerpo
   ): Promise<EventoPermiso> {
-    return this.eventoPermisoService.create(id_evento, id_permiso, documento);
+    return this.eventoPermisoService.create({id_evento, id_permiso, documento}); //modificado
   }
 
   @Put(':id_evento/:id_permiso')
-  update(
-    @Param('id_evento') id_evento: number,
-    @Param('id_permiso') id_permiso: number,
-    @Body() data: Partial<EventoPermiso>,
-  ): Promise<EventoPermiso> {  // Cambiamos Promise<void> a Promise<EventoPermiso>
-    return this.eventoPermisoService.update(id_evento, id_permiso, data.documento);
-  }
+async update(
+  @Param('id_evento') id_evento: number,
+  @Param('id_permiso') id_permiso: number,
+  @Body() data: Partial<EventoPermiso>,
+): Promise<void> {
+  await this.eventoPermisoService.update(id_evento, id_permiso, { documento: data.documento });
+}
   
 
   @Delete(':id_evento/:id_permiso')
@@ -43,6 +43,6 @@ export class EventoPermisoController {
     @Param('id_evento') id_evento: number,
     @Param('id_permiso') id_permiso: number,
   ): Promise<void> {
-    return this.eventoPermisoService.remove(id_evento, id_permiso);
+    return this.eventoPermisoService.delete(id_evento, id_permiso);
   }
 }
