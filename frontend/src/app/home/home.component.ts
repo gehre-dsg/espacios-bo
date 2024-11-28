@@ -10,9 +10,10 @@ import axios from 'axios';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor () {
+  constructor() {
     this.getUsuarios();
   }
+
   highlights = [
     {
       title: 'Reserva Espacios',
@@ -46,12 +47,24 @@ export class HomeComponent {
 
   async getUsuarios() {
     try {
-      const response = await axios.get(
-        'http://localhost:3000/usuarios'
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error)
+      // Simular obtener un token desde almacenamiento local (o un servicio)
+      const token = 'SuperToken'; // Cambiar según el rol del usuario
+
+      // Realizar la solicitud GET con el token en los headers
+      const response = await axios.get('http://localhost:3000/usuarios', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log('Usuarios obtenidos:', response.data);
+    } catch (e) {
+      // Asegurarte de que el error sea del tipo AxiosError
+      const error = e as any; // Si estás seguro del tipo puedes usar `AxiosError`
+      if (error.response && error.response.data) {
+        console.error('Error al obtener usuarios:', error.response.data);
+      } else {
+        console.error('Error al obtener usuarios:', error.message);
+      }
     }
   }
 }
