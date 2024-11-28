@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import axios from 'axios';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  constructor () {
+    this.getUsuarios();
+  }
   highlights = [
     {
       title: 'Reserva Espacios',
@@ -37,6 +41,17 @@ export class HomeComponent {
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  async getUsuarios() {
+    try {
+      const response = await axios.get(
+        'http://localhost:3000/usuarios'
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error)
     }
   }
 }
