@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from '../../entities/usuario.entity';
 import { UsuarioService } from './usuario.service';
 import { UsuarioController } from './usuario.controller';
+import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Usuario])],
@@ -10,4 +11,10 @@ import { UsuarioController } from './usuario.controller';
   controllers: [UsuarioController],
   exports: [UsuarioService],
 })
-export class UsuarioModule {}
+export class UsuarioModule {
+  configure(consumer: MiddlewareConsumer){
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(UsuarioController);
+  }
+}

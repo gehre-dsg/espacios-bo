@@ -1,8 +1,9 @@
-import {Controller,Get,Post,Param,Body,BadRequestException,NotFoundException,InternalServerErrorException,} from '@nestjs/common';
+import {Controller,Get,Post,Param,Body,Req,BadRequestException,NotFoundException,ForbiddenException,InternalServerErrorException,} from '@nestjs/common';
 import { EmpresaService } from './empresa.service';
 import { UsuarioService } from '../usuario/usuario.service';
 import { Empresa } from '../../entities/empresa.entity';
 import { Usuario } from '../../entities/usuario.entity';
+import { Request } from 'express';
 
 @Controller('empresas')
 export class EmpresaController {
@@ -12,8 +13,17 @@ export class EmpresaController {
   ) {}
 
   @Get()
-  async findAll(): Promise<Empresa[]> {
+  async findAll(@Req() req: Request): Promise<Empresa[]> {
     try {
+      const user = req['user'];
+
+      // Validar rol
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para listar las empresas registradas',
+        );
+      }
+
       const empresas = await this.empresaService.findAll();
       if (empresas.length === 0) {
         throw new NotFoundException('No se encontraron empresas registradas');
@@ -28,8 +38,17 @@ export class EmpresaController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Empresa> {
+  async findOne(@Param('id') id: number, @Req() req: Request): Promise<Empresa> {
     try {
+      const user = req['user'];
+
+      // Validar rol
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para consultar los datos de esta empresa',
+        );
+      }
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
@@ -52,8 +71,18 @@ export class EmpresaController {
   @Post()
   async create(
     @Body() body: { ci_usuario: number; empresa: string; documento: Buffer },
+    @Req() req: Request,
   ): Promise<Empresa> {
     try {
+      const user = req['user'];
+
+      // Validar rol
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para registrar una empresa',
+        );
+      }
+
       // Validar campos obligatorios
       const { ci_usuario, empresa, documento } = body;
       if (!ci_usuario || !empresa || !documento) {

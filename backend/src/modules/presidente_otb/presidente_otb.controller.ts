@@ -1,15 +1,25 @@
-import {Controller,Get,Post,Body,Param,BadRequestException,NotFoundException,InternalServerErrorException,} from '@nestjs/common';
+import {Controller,Get,Post,Body,Param,Req,BadRequestException,NotFoundException,ForbiddenException,InternalServerErrorException,} from '@nestjs/common';
 import { PresidenteOtbService } from './presidente_otb.service';
 import { PresidenteOtb } from '../../entities/presidente_otb.entity';
 import { Usuario } from '../../entities/usuario.entity';
+import { Request } from 'express';
 
 @Controller('presidentes_otb')
 export class PresidenteOtbController {
   constructor(private readonly presidenteOtbService: PresidenteOtbService) {}
 
   @Get()
-  async findAll(): Promise<PresidenteOtb[]> {
+  async findAll(@Req() req: Request): Promise<PresidenteOtb[]> {
     try {
+      const user = req['user'];
+
+      // Validar rol
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para listar los presidentes de OTB',
+        );
+      }
+
       const presidentes = await this.presidenteOtbService.findAll();
       if (presidentes.length === 0) {
         throw new NotFoundException('No se encontraron presidentes de OTB registrados');
@@ -24,8 +34,20 @@ export class PresidenteOtbController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<PresidenteOtb> {
+  async findOne(
+    @Param('id') id: number,
+    @Req() req: Request,
+  ): Promise<PresidenteOtb> {
     try {
+      const user = req['user'];
+
+      // Validar rol
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para consultar este presidente de OTB',
+        );
+      }
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
@@ -48,8 +70,18 @@ export class PresidenteOtbController {
   @Post()
   async create(
     @Body() body: { ci_usuario: number; otb: string; documento: Buffer },
+    @Req() req: Request,
   ): Promise<PresidenteOtb> {
     try {
+      const user = req['user'];
+
+      // Validar rol
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para registrar un presidente de OTB',
+        );
+      }
+
       // Validar campos obligatorios
       const { ci_usuario, otb, documento } = body;
       if (!ci_usuario || !otb || !documento) {

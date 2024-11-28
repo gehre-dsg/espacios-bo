@@ -1,14 +1,24 @@
-import {Controller,Get,Post,Delete,Param,Body,BadRequestException,NotFoundException,InternalServerErrorException,} from '@nestjs/common';
+import {Controller,Get,Post,Delete,Param,Body,Req,BadRequestException,NotFoundException,ForbiddenException,InternalServerErrorException,} from '@nestjs/common';
 import { EventoService } from './evento.service';
 import { Evento } from '../../entities/evento.entity';
+import { Request } from 'express';
 
 @Controller('eventos')
 export class EventoController {
   constructor(private readonly eventoService: EventoService) {}
 
   @Get()
-  async findAll(): Promise<Evento[]> {
+  async findAll(@Req() req: Request): Promise<Evento[]> {
     try {
+      const user = req['user'];
+
+      // Validar roles
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para listar los eventos',
+        );
+      }
+
       const eventos = await this.eventoService.findAll();
       if (eventos.length === 0) {
         throw new NotFoundException('No se encontraron eventos');
@@ -23,11 +33,21 @@ export class EventoController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Evento> {
+  async findOne(@Param('id') id: number, @Req() req: Request): Promise<Evento> {
     try {
+      const user = req['user'];
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
+
+      // Validar roles
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para consultar este evento',
+        );
+      }
+
       const evento = await this.eventoService.findOne(id);
       if (!evento) {
         throw new NotFoundException(`No se encontró el evento con ID ${id}`);
@@ -54,8 +74,18 @@ export class EventoController {
       descripcion: string;
       fecha_evento: Date;
     },
+    @Req() req: Request,
   ): Promise<Evento> {
     try {
+      const user = req['user'];
+
+      // Validar roles
+      if (user.rol !== 'super-admin' && user.rol !== 'admin') {
+        throw new ForbiddenException(
+          'No tienes permiso para crear un nuevo evento',
+        );
+      }
+
       // Validar campos obligatorios
       const { id_reserva, id_tipo_evento, nombre, descripcion, fecha_evento } = body;
       if (!id_reserva || !id_tipo_evento || !nombre || !fecha_evento) {
@@ -81,7 +111,6 @@ export class EventoController {
         );
       }
 
-      // Crear el evento
       return await this.eventoService.create(body);
     } catch (error) {
       console.error('Error al crear el evento:', error);
@@ -97,19 +126,26 @@ export class EventoController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
+  async delete(@Param('id') id: number, @Req() req: Request): Promise<void> {
     try {
+      const user = req['user'];
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
 
-      // Verificar si el evento existe
+      // Validar roles
+      if (user.rol !== 'super-admin') {
+        throw new ForbiddenException(
+          'Solo los super-administradores pueden eliminar eventos',
+        );
+      }
+
       const evento = await this.eventoService.findOne(id);
       if (!evento) {
         throw new NotFoundException(`No se encontró el evento con ID ${id}`);
       }
 
-      // Eliminar el evento
       await this.eventoService.delete(id);
     } catch (error) {
       if (error instanceof NotFoundException || error instanceof BadRequestException) {

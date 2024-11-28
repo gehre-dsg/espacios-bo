@@ -1,25 +1,22 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Body,
-  Param,
-  BadRequestException,
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import {Controller,Get,Post,Put,Delete,Body,Param,Req,BadRequestException,NotFoundException,ForbiddenException,InternalServerErrorException,} from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../../entities/usuario.entity';
+import { Request } from 'express';
 
 @Controller('usuarios')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
   @Get()
-  async findAll(): Promise<Usuario[]> {
+  async findAll(@Req() req: Request): Promise<Usuario[]> {
     try {
+      const user = req['user'];
+      if (user.rol !== 'super-admin') {
+        throw new ForbiddenException(
+          'Solo los super-administradores pueden acceder a esta ruta',
+        );
+      }
+
       const usuarios = await this.usuarioService.findAll();
       if (usuarios.length === 0) {
         throw new NotFoundException('No se encontraron usuarios');
@@ -34,15 +31,26 @@ export class UsuarioController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Usuario> {
+  async findOne(@Param('id') id: number, @Req() req: Request): Promise<Usuario> {
     try {
+      const user = req['user'];
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
+
+      // Validar permisos: super-admin, admin o el propio usuario
+      if (user.rol === 'user' && user.id !== id) {
+        throw new ForbiddenException(
+          'No tienes permiso para ver la información de este usuario',
+        );
+      }
+
       const usuario = await this.usuarioService.findOne(id);
       if (!usuario) {
         throw new NotFoundException(`No se encontró el usuario con ID ${id}`);
       }
+
       return usuario;
     } catch (error) {
       if (error instanceof NotFoundException || error instanceof BadRequestException) {
@@ -56,16 +64,24 @@ export class UsuarioController {
   }
 
   @Post()
-  async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
+  async create(
+    @Body() usuarioData: Partial<Usuario>,
+    @Req() req: Request,
+  ): Promise<Usuario> {
     try {
-      // Validar que los campos obligatorios estén presentes
+      const user = req['user'];
+      if (user.rol !== 'super-admin') {
+        throw new ForbiddenException(
+          'Solo los super-administradores pueden crear usuarios',
+        );
+      }
+
       if (!usuarioData.nombre || !usuarioData.email || !usuarioData.contrasena) {
         throw new BadRequestException(
           'Los campos nombre, email y contraseña son obligatorios',
         );
       }
 
-      // Validar que el rol sea válido
       if (usuarioData.id_rol && typeof usuarioData.id_rol !== 'number') {
         throw new BadRequestException('El campo id_rol debe ser un número válido');
       }
@@ -86,19 +102,26 @@ export class UsuarioController {
   async update(
     @Param('id') id: number,
     @Body() usuarioData: Partial<Usuario>,
+    @Req() req: Request,
   ): Promise<void> {
     try {
+      const user = req['user'];
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
 
-      // Verificar si el usuario existe
+      if (user.rol === 'user' && user.id !== id) {
+        throw new ForbiddenException(
+          'No tienes permiso para actualizar este usuario',
+        );
+      }
+
       const usuario = await this.usuarioService.findOne(id);
       if (!usuario) {
         throw new NotFoundException(`No se encontró el usuario con ID ${id}`);
       }
 
-      // Validar datos actualizados
       if (usuarioData.email && typeof usuarioData.email !== 'string') {
         throw new BadRequestException('El campo email debe ser un texto válido');
       }
@@ -116,13 +139,20 @@ export class UsuarioController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
+  async delete(@Param('id') id: number, @Req() req: Request): Promise<void> {
     try {
+      const user = req['user'];
+
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
 
-      // Verificar si el usuario existe
+      if (user.rol !== 'super-admin') {
+        throw new ForbiddenException(
+          'Solo los super-administradores pueden eliminar usuarios',
+        );
+      }
+
       const usuario = await this.usuarioService.findOne(id);
       if (!usuario) {
         throw new NotFoundException(`No se encontró el usuario con ID ${id}`);
