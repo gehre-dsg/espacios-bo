@@ -9,6 +9,21 @@ import { Request, Response, NextFunction } from 'express';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
+    const publicRoutes = [
+      {path: '/usuarios', method: 'POST'},
+    ];
+    
+    const isPublicRoute = publicRoutes.some(
+      (route) =>
+        req.path.startsWith(route.path) && req.method === route.method
+    );
+    
+    if(isPublicRoute){
+      console.log('ruta publica accedida: ${req.method} ${req.path}');
+      return next();
+    }
+    
+    
     const token = req.headers['authorization'];
 
     if (!token) {

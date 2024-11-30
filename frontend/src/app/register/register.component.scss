@@ -73,6 +73,12 @@
     background-color: #03543f;
     cursor: not-allowed;
   }
+
+  button:enabled {
+    background-color: #049c65;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
   
   .login-link {
     text-align: center;
@@ -96,3 +102,10 @@
     }
   }
   
+  .error-message {
+    color: #ff4d4d; /* Rojo para destacar el error */
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: -10px; /* Ajustar la separación del input */
+    margin-bottom: 10px;
+  }

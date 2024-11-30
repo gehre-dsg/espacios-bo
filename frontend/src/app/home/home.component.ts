@@ -50,8 +50,8 @@ export class HomeComponent {
       // Simular obtener un token desde almacenamiento local (o un servicio)
       const token = 'SuperToken'; // Cambiar según el rol del usuario
 
-      // Realizar la solicitud GET con el token en los headers
-      const response = await axios.get('http://localhost:3000/usuarios', {
+      // Realizar la solicitud GET con el token en los headersd
+      const response = await axios.get('http://localhost:3000/usuarios/3', {
         headers: {
           Authorization: token,
         },

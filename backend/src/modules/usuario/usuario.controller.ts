@@ -39,7 +39,6 @@ export class UsuarioController {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
 
-      // Validar permisos: super-admin, admin o el propio usuario
       if (user.rol === 'user' && user.id !== id) {
         throw new ForbiddenException(
           'No tienes permiso para ver la información de este usuario',
@@ -64,18 +63,8 @@ export class UsuarioController {
   }
 
   @Post()
-  async create(
-    @Body() usuarioData: Partial<Usuario>,
-    @Req() req: Request,
-  ): Promise<Usuario> {
+  async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
     try {
-      const user = req['user'];
-      if (user.rol !== 'super-admin') {
-        throw new ForbiddenException(
-          'Solo los super-administradores pueden crear usuarios',
-        );
-      }
-
       if (!usuarioData.nombre || !usuarioData.email || !usuarioData.contrasena) {
         throw new BadRequestException(
           'Los campos nombre, email y contraseña son obligatorios',
