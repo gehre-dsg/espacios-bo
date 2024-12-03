@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importa CommonModule
-import axios from 'axios';
+import { CommonModule } from '@angular/common';
+import { UsuariosService } from '../services/usuarios.service';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
-  imports: [CommonModule], // Agrega CommonModule aquí
+  imports: [CommonModule],
 })
 export class AdminComponent implements OnInit {
-  users: any[] = []; // Lista de usuarios
+  users: any[] = [];
 
-  constructor() {}
+  constructor(private usuariosService: UsuariosService) {} // Inyecta UsuariosService
 
   ngOnInit() {
     this.getUsuarios();
@@ -20,13 +20,17 @@ export class AdminComponent implements OnInit {
 
   async getUsuarios() {
     try {
-      const token = 'SuperToken'; // Simular token, ajusta según el almacenamiento local
-      const response = await axios.get('http://localhost:3000/usuarios', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      this.users = response.data;
+      const usuarios = await this.usuariosService.getUsuarios();
+      this.users = usuarios.map((user: any) => ({
+        ci_usuario: user.ci_usuario,
+        nombre: user.nombre,
+        ap_paterno: user.ap_paterno,
+        ap_materno: user.ap_materno,
+        email: user.email,
+        direccion: user.direccion,
+        telefono: user.telefono,
+        id_rol: user.id_rol,
+      }));
     } catch (error: any) {
       console.error('Error al obtener usuarios:', error.response?.data || error.message);
     }

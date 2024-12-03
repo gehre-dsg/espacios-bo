@@ -32,12 +32,8 @@
         font-weight: bold;
     }
 
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
     tr:hover {
-        background-color: #eef7f5;
+        background-color: #333;
     }
 
     td {
