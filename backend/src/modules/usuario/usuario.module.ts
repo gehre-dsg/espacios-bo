@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from '../../entities/usuario.entity';
 import { Role } from '../../entities/rol.entity'; // Importar la entidad Role
@@ -16,6 +16,12 @@ import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
 })
 export class UsuarioModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes(UsuarioController);
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'usuarios', method: RequestMethod.POST }, // Excluir POST /usuarios
+        { path: 'usuarios/:id', method: RequestMethod.PATCH } // Excluir PATCH /usuarios/:id
+      )
+      .forRoutes(UsuarioController);
   }
 }

@@ -4,6 +4,7 @@ import { NosotrosComponent } from './nosotros/nosotros.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { RegistroDatosComponent } from './registro-datos/registro-datos.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -13,4 +14,6 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'registro-datos', component: RegistroDatosComponent }, // Ruta para registro-datos
+  { path: '**', redirectTo: 'home' }, // Manejo de rutas no encontradas
 ];

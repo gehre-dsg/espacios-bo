@@ -62,6 +62,8 @@ export class RegisterComponent {
       const response = await this.usuariosService.createUsuario(usuario);
       console.log('Usuario registrado:', response);
 
+      localStorage.setItem('ci_usuario', response.ci_usuario.toString());
+
       // Redirigir a la siguiente página de registro
       this.router.navigate(['/registro-datos']);
     } catch (error) {
