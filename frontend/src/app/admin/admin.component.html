@@ -1,0 +1,25 @@
+<section class="admin-container">
+    <h1 class="admin-title">Panel de Administración</h1>
+
+    <!-- Mostrar usuarios -->
+    <table *ngIf="users.length > 0">
+    <thead>
+        <tr>
+        <th>ID</th>
+        <th>CI</th>
+        <th>Email</th>
+        <th>Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.ci_usuario }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.id_rol }}</td>
+        </tr>
+    </tbody>
+    </table>
+
+    <p *ngIf="users.length === 0">No hay usuarios registrados.</p>
+</section>

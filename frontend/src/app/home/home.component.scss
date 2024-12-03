@@ -1,137 +1,147 @@
 .home-container {
-    font-family: 'Arial', sans-serif;
-  
-    .hero {
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Vista_Aerea_del_Cristo_de_la_Concordia.jpg/1020px-Vista_Aerea_del_Cristo_de_la_Concordia.jpg') no-repeat center center/cover;
-      height: 100vh;
-      background-attachment: fixed;
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-  
-      .hero-content {
-        max-width: 600px;
-  
-        h1 {
-          font-size: 3rem;
-          text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-        }
-  
-        p {
-          font-size: 1.5rem;
-          margin: 1rem 0;
-        }
-  
-        .hero-buttons {
-          display: flex;
-          gap: 1rem;
-          justify-content: center;
-  
-          .cta {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #03aa80;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-  
-            &.secondary {
-              background-color: transparent;
-              border: 2px solid white;
-              color: white;
-  
-              &:hover {
-                background-color: white;
-                color: black;
-              }
-            }
-  
-            &:hover {
-              background-color: #005f47;
-              color: white;
-            }
-          }
-        }
+  font-family: 'Arial', sans-serif;
+
+  .hero {
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Vista_Aerea_del_Cristo_de_la_Concordia.jpg/1020px-Vista_Aerea_del_Cristo_de_la_Concordia.jpg') no-repeat center center/cover;
+    height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+
+    .hero-content {
+      max-width: 600px;
+
+      h1 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
       }
-    }
-  
-    .highlights {
-      padding: 4rem 2rem;
-      background-color: #f4f4f4;
-      text-align: center;
-  
-      .section-title {
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
+
+      p {
+        font-size: 1.5rem;
+        margin: 1rem 0;
       }
-  
-      .highlights-list {
+
+      .hero-buttons {
         display: flex;
-        justify-content: center;
-        gap: 2rem;
-  
-        .highlight-card {
-          padding: 2rem;
-          border-radius: 10px;
-          background-color: #fff;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          transition: transform 0.3s;
-  
-          &:hover {
-            transform: translateY(-10px);
-          }
-  
-          img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-          }
-  
-          h3 {
-            font-size: 1.5rem;
-            color: #005f47;
-          }
-  
-          p {
-            font-size: 1rem;
-            color: #333;
-          }
-        }
-      }
-    }
-  
-    .gallery {
-      padding: 4rem 2rem;
-      background-color: #0a0a0a;
-  
-      .section-title {
-        color: white;
-        font-size: 2.5rem;
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-  
-      .carousel {
-        display: flex;
-        overflow-x: auto;
         gap: 1rem;
-  
-        .carousel-item {
-          min-width: 300px;
-          border-radius: 10px;
-          overflow: hidden;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  
-          img {
-            width: 100%;
-            height: auto;
-            display: block;
+        justify-content: center;
+
+        .cta {
+          padding: 0.75rem 1.5rem;
+          border: 2px solid #03aa80;
+          border-radius: 25px;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: all 0.3s;
+
+          &.secondary {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+
+            &:hover {
+              background-color: white;
+              color: black;
+            }
+          }
+
+          &.admin-link {
+            background-color: #005f47;
+            color: white;
+            border: none;
+
+            &:hover {
+              background-color: #03aa80;
+              color: black;
+            }
+          }
+
+          &:hover {
+            background-color: #005f47;
+            color: white;
           }
         }
       }
     }
   }
-  
+
+  .highlights {
+    padding: 4rem 2rem;
+    background-color: #f4f4f4;
+    text-align: center;
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .highlights-list {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+
+      .highlight-card {
+        padding: 2rem;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+
+        &:hover {
+          transform: translateY(-10px);
+        }
+
+        img {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.5rem;
+          color: #005f47;
+        }
+
+        p {
+          font-size: 1rem;
+          color: #333;
+        }
+      }
+    }
+  }
+
+  .gallery {
+    padding: 4rem 2rem;
+    background-color: #0a0a0a;
+
+    .section-title {
+      color: white;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+
+      .carousel-item {
+        min-width: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+    }
+  }
+}

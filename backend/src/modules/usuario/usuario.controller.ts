@@ -1,4 +1,4 @@
-import {Controller,Get,Post,Put,Patch,Delete,Body,Param,BadRequestException,NotFoundException,InternalServerErrorException,} from '@nestjs/common';
+import {Controller,Get,Post,Put,Patch,Delete,Body,Param,BadRequestException,NotFoundException,InternalServerErrorException, ForbiddenException, UnauthorizedException, Req,} from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../../entities/usuario.entity';
 import { Role } from '../../entities/rol.entity';
@@ -14,12 +14,19 @@ export class UsuarioController {
   ) {}
 
   @Get()
-  async findAll(): Promise<Usuario[]> {
+  async findAll(@Req() req: Request): Promise<Usuario[]> {
     try {
-      const usuarios = await this.usuarioService.findAll();
-      if (usuarios.length === 0) {
-        throw new NotFoundException('No se encontraron usuarios');
+      const user = req['user'];
+      if (!user) {
+        throw new UnauthorizedException('Usuario no autenticado');
       }
+
+      // Validar que solo admin o super-admin puedan ver todos los usuarios
+      if (user.rol !== 'admin' && user.rol !== 'super-admin') {
+        throw new ForbiddenException('No tienes permiso para acceder a esta ruta');
+      }
+
+      const usuarios = await this.usuarioService.findAll();
       return usuarios;
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
@@ -63,7 +70,6 @@ async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
       throw new BadRequestException('El campo id_rol debe ser un número válido');
     }
 
-    usuarioData.ci_usuario = usuarioData.ci_usuario || 0;
     usuarioData.nombre = usuarioData.nombre || 'Usuario temporal';
     usuarioData.ap_paterno = usuarioData.ap_paterno || 'Apellido temporal';
     usuarioData.ap_materno = usuarioData.ap_materno || 'Apellido temporal';
