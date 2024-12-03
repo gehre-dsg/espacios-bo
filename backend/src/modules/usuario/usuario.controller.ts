@@ -1,22 +1,21 @@
-import {Controller,Get,Post,Put,Delete,Body,Param,Req,BadRequestException,NotFoundException,ForbiddenException,InternalServerErrorException,} from '@nestjs/common';
+import {Controller,Get,Post,Put,Patch,Delete,Body,Param,BadRequestException,NotFoundException,InternalServerErrorException,} from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../../entities/usuario.entity';
-import { Request } from 'express';
+import { Role } from '../../entities/rol.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Controller('usuarios')
 export class UsuarioController {
-  constructor(private readonly usuarioService: UsuarioService) {}
+  constructor(
+    private readonly usuarioService: UsuarioService,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
+  ) {}
 
   @Get()
-  async findAll(@Req() req: Request): Promise<Usuario[]> {
+  async findAll(): Promise<Usuario[]> {
     try {
-      const user = req['user'];
-      if (user.rol !== 'super-admin') {
-        throw new ForbiddenException(
-          'Solo los super-administradores pueden acceder a esta ruta',
-        );
-      }
-
       const usuarios = await this.usuarioService.findAll();
       if (usuarios.length === 0) {
         throw new NotFoundException('No se encontraron usuarios');
@@ -31,18 +30,10 @@ export class UsuarioController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number, @Req() req: Request): Promise<Usuario> {
+  async findOne(@Param('id') id: number): Promise<Usuario> {
     try {
-      const user = req['user'];
-
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
-      }
-
-      if (user.rol === 'user' && user.id !== id) {
-        throw new ForbiddenException(
-          'No tienes permiso para ver la información de este usuario',
-        );
       }
 
       const usuario = await this.usuarioService.findOne(id);
@@ -52,9 +43,6 @@ export class UsuarioController {
 
       return usuario;
     } catch (error) {
-      if (error instanceof NotFoundException || error instanceof BadRequestException) {
-        throw error;
-      }
       console.error(`Error al buscar el usuario con ID ${id}:`, error);
       throw new InternalServerErrorException(
         `Error al buscar el usuario con ID ${id}`,
@@ -63,47 +51,49 @@ export class UsuarioController {
   }
 
   @Post()
-  async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
-    try {
-      if (!usuarioData.nombre || !usuarioData.email || !usuarioData.contrasena) {
-        throw new BadRequestException(
-          'Los campos nombre, email y contraseña son obligatorios',
-        );
-      }
-
-      if (usuarioData.id_rol && typeof usuarioData.id_rol !== 'number') {
-        throw new BadRequestException('El campo id_rol debe ser un número válido');
-      }
-
-      return await this.usuarioService.create(usuarioData);
-    } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new BadRequestException('El email ya está registrado');
-      }
-      console.error('Error al crear el usuario:', error);
-      throw new InternalServerErrorException(
-        'Ocurrió un error al crear el usuario',
+async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
+  try {
+    if (!usuarioData.email || !usuarioData.contrasena) {
+      throw new BadRequestException(
+        'Los campos email y contraseña son obligatorios',
       );
     }
+
+    if (usuarioData.id_rol && typeof usuarioData.id_rol !== 'number') {
+      throw new BadRequestException('El campo id_rol debe ser un número válido');
+    }
+
+    usuarioData.ci_usuario = usuarioData.ci_usuario || 0;
+    usuarioData.nombre = usuarioData.nombre || 'Usuario temporal';
+    usuarioData.ap_paterno = usuarioData.ap_paterno || 'Apellido temporal';
+    usuarioData.ap_materno = usuarioData.ap_materno || 'Apellido temporal';
+    usuarioData.direccion = usuarioData.direccion || 'Sin dirección';
+    usuarioData.telefono = usuarioData.telefono || 'Sin teléfono';
+    if (!usuarioData.id_rol) {
+      usuarioData.id_rol = 3;
+    }
+
+    return await this.usuarioService.create(usuarioData);
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      throw new BadRequestException('El email o CI ya está registrado');
+    }
+    console.error('Error al crear el usuario:', error);
+    throw new InternalServerErrorException(
+      'Ocurrió un error al crear el usuario',
+    );
   }
+}
+
 
   @Put(':id')
   async update(
     @Param('id') id: number,
     @Body() usuarioData: Partial<Usuario>,
-    @Req() req: Request,
   ): Promise<void> {
     try {
-      const user = req['user'];
-
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
-      }
-
-      if (user.rol === 'user' && user.id !== id) {
-        throw new ForbiddenException(
-          'No tienes permiso para actualizar este usuario',
-        );
       }
 
       const usuario = await this.usuarioService.findOne(id);
@@ -117,9 +107,6 @@ export class UsuarioController {
 
       await this.usuarioService.update(id, usuarioData);
     } catch (error) {
-      if (error instanceof NotFoundException || error instanceof BadRequestException) {
-        throw error;
-      }
       console.error(`Error al actualizar el usuario con ID ${id}:`, error);
       throw new InternalServerErrorException(
         `Error al actualizar el usuario con ID ${id}`,
@@ -127,19 +114,31 @@ export class UsuarioController {
     }
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: number, @Req() req: Request): Promise<void> {
+  @Patch(':id')
+  async updatePartial(
+    @Param('id') id: number,
+    @Body() partialData: Partial<Usuario>,
+  ): Promise<Usuario> {
     try {
-      const user = req['user'];
-
       if (isNaN(id)) {
         throw new BadRequestException('El ID proporcionado no es válido');
       }
 
-      if (user.rol !== 'super-admin') {
-        throw new ForbiddenException(
-          'Solo los super-administradores pueden eliminar usuarios',
-        );
+      const updatedUser = await this.usuarioService.updatePartial(id, partialData);
+      return updatedUser;
+    } catch (error) {
+      console.error(`Error al actualizar parcialmente el usuario con ID ${id}:`, error);
+      throw new InternalServerErrorException(
+        `Error al actualizar parcialmente el usuario con ID ${id}`,
+      );
+    }
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: number): Promise<void> {
+    try {
+      if (isNaN(id)) {
+        throw new BadRequestException('El ID proporcionado no es válido');
       }
 
       const usuario = await this.usuarioService.findOne(id);
@@ -149,9 +148,6 @@ export class UsuarioController {
 
       await this.usuarioService.delete(id);
     } catch (error) {
-      if (error instanceof NotFoundException || error instanceof BadRequestException) {
-        throw error;
-      }
       console.error(`Error al eliminar el usuario con ID ${id}:`, error);
       throw new InternalServerErrorException(
         `Error al eliminar el usuario con ID ${id}`,

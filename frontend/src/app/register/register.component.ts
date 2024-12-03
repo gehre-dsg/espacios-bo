@@ -13,6 +13,7 @@ import { UsuariosService } from '../services/usuarios.service';
 })
 export class RegisterComponent {
   registerData = {
+    ci_usuario: null,
     email: '',
     password: '',
     confirmPassword: '',
@@ -20,6 +21,7 @@ export class RegisterComponent {
 
   passwordError = '';
   emailError = '';
+  ciUsuarioError = '';
 
   constructor(
     private usuariosService: UsuariosService,
@@ -29,6 +31,13 @@ export class RegisterComponent {
   async onRegisterSubmit() {
     this.passwordError = '';
     this.emailError = '';
+    this.ciUsuarioError = '';
+
+    // Validar CI Usuario
+    if (!this.registerData.ci_usuario || isNaN(this.registerData.ci_usuario)) {
+      this.ciUsuarioError = 'El CI de usuario es obligatorio y debe ser un número válido';
+      return;
+    }
 
     // Validar contraseñas
     if (this.registerData.password !== this.registerData.confirmPassword) {
@@ -45,6 +54,7 @@ export class RegisterComponent {
 
     try {
       const usuario = {
+        ci_usuario: this.registerData.ci_usuario,
         email: this.registerData.email,
         contrasena: this.registerData.password,
       };
