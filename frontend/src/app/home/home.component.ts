@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import axios from 'axios';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import axios from 'axios';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor() {
+  constructor(private router: Router) {
     this.getUsuarios();
   }
 
@@ -47,10 +48,7 @@ export class HomeComponent {
 
   async getUsuarios() {
     try {
-      // Simular obtener un token desde almacenamiento local (o un servicio)
-      const token = 'SuperToken'; // Cambiar según el rol del usuario
-
-      // Realizar la solicitud GET con el token en los headersd
+      const token = 'SuperToken';
       const response = await axios.get('http://localhost:3000/usuarios/3', {
         headers: {
           Authorization: token,
@@ -58,13 +56,17 @@ export class HomeComponent {
       });
       console.log('Usuarios obtenidos:', response.data);
     } catch (e) {
-      // Asegurarte de que el error sea del tipo AxiosError
-      const error = e as any; // Si estás seguro del tipo puedes usar `AxiosError`
+      const error = e as any;
       if (error.response && error.response.data) {
         console.error('Error al obtener usuarios:', error.response.data);
       } else {
         console.error('Error al obtener usuarios:', error.message);
       }
     }
+  }
+
+  // Método para redirigir a la página de administración
+  goToAdmin() {
+    this.router.navigate(['/admin']);
   }
 }
