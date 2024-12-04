@@ -33,19 +33,16 @@ export class RegisterComponent {
     this.emailError = '';
     this.ciUsuarioError = '';
 
-    // Validar CI Usuario
     if (!this.registerData.ci_usuario || isNaN(this.registerData.ci_usuario)) {
       this.ciUsuarioError = 'El CI de usuario es obligatorio y debe ser un número válido';
       return;
     }
 
-    // Validar contraseñas
     if (this.registerData.password !== this.registerData.confirmPassword) {
       this.passwordError = 'Las contraseñas no coinciden';
       return;
     }
 
-    // Validar formato de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(this.registerData.email)) {
       this.emailError = 'El formato del email es inválido';
@@ -64,7 +61,7 @@ export class RegisterComponent {
 
       localStorage.setItem('ci_usuario', response.ci_usuario.toString());
 
-      // Redirigir a la siguiente página de registro
+      //redirigir
       this.router.navigate(['/registro-datos']);
     } catch (error) {
       console.error('Error al registrar usuario:', error);
