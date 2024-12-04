@@ -15,6 +15,6 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'registro-datos', component: RegistroDatosComponent },
-  { path: 'admin', component: AdminComponent }, // Nueva ruta para administración
+  { path: 'admin', component: AdminComponent },
   { path: '**', redirectTo: 'home' },
 ];

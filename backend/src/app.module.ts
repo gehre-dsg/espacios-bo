@@ -23,8 +23,8 @@ import { ReservaModule } from './modules/reserva/reserva.module';
     }),
     UsuarioModule,
     PermisoModule,
-    EventoModule, // Asegúrate de importar el módulo de Evento
-    PresidenteOtbModule, // Asegúrate de importar el módulo de PresidenteOtb
+    EventoModule,
+    PresidenteOtbModule,
     EmpresaModule,
     EventoPermisoModule,
     ReservaModule,

@@ -64,9 +64,4 @@ export class HomeComponent {
       }
     }
   }
-
-  // Método para redirigir a la página de administración
-  goToAdmin() {
-    this.router.navigate(['/admin']);
-  }
 }
