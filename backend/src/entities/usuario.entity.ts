@@ -27,7 +27,7 @@ export class Usuario {
   @Column({ length: 20 })
   telefono: string;
 
-  @ManyToOne(() => Role, { eager: false })
+  @ManyToOne(() => Role)
   @JoinColumn({ name: 'id_rol' })
-  id_rol: number;
+  id_rol: Role;
 }
