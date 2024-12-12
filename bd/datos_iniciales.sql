@@ -6,6 +6,15 @@ INSERT INTO roles (rol) VALUES
     ('admin'),
     ('presidente_otb'),
     ('empresa');
+
+INSERT INTO estados (estado) VALUES 
+    ('pendiente'),
+    ('aceptado'),
+    ('rechazado'),
+    ('pagado'),
+    ('cancelado'),
+    ('cancelado-reembolzado'),
+    ('por entregar');
     
 INSERT INTO tipos_eventos (tipo_evento) VALUES
 	('Feria'),
