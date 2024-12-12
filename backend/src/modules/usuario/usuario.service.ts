@@ -18,6 +18,15 @@ export class UsuarioService {
     return this.usuarioRepository.findOneBy({ ci_usuario: id });
   }
 
+  //para usar en el auth.service.ts
+  async findByEmail(email: string): Promise<Usuario> {
+    const usuario = await this.usuarioRepository.findOneBy({ email });
+    if (!usuario) {
+      throw new NotFoundException(`No se encontró el usuario con el email ${email}`);
+    }
+    return usuario;
+  }
+
   async create(usuario: Partial<Usuario>): Promise<Usuario> {
     return this.usuarioRepository.save(usuario);
   }
