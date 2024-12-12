@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './modules/usuario/usuario.module';
-import { PermisoModule } from './modules/permiso/permiso.module'; // Módulo de permiso
-import { EventoModule } from './modules/evento/evento.module'; // Módulo de evento
-import { PresidenteOtbModule } from './modules/presidente_otb/presidente_otb.module'; // Módulo de presidente_otb
+import { PermisoModule } from './endpoints/permiso/permiso.module'; // Módulo de permiso
+import { EventoModule } from './endpoints/evento/evento.module'; // Módulo de evento
+import { PresidenteOtbModule } from './modules/presidente-otb/presidente_otb.module'; // Módulo de presidente_otb
 import { EmpresaModule } from './modules/empresa/empresa.module';
-import { EventoPermisoModule } from './modules/evento-permiso/evento-permiso.module';
-import { ReservaModule } from './modules/reserva/reserva.module';
+import { EventoPermisoModule } from './endpoints/permiso-evento/evento-permiso.module';
+import { ReservaModule } from './endpoints/reserva/reserva.module';
 
 @Module({
   imports: [
