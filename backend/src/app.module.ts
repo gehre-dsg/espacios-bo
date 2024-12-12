@@ -16,7 +16,7 @@ import { ReservaModule } from './modules/reserva/reserva.module';
       port: 3306,
       username: 'appuser',
       password: 'app_password',
-      database: 'proyecto_sisinfo',
+      database: 'espacios_bo',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging: ['query', 'error'],

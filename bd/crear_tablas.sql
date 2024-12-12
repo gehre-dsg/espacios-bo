@@ -1,18 +1,19 @@
 -- Se maneja la eliminacion y creacion de tablas
-USE proyecto_sisinfo;
+USE espacios_bo;
 
+DROP TABLE IF EXISTS logs_cambios;
 DROP TABLE IF EXISTS transferencias_reservas;
-DROP TABLE IF EXISTS estados;
-DROP TABLE IF EXISTS cambios;
+DROP TABLE IF EXISTS empresas;
+DROP TABLE IF EXISTS presidentes_otb;
 DROP TABLE IF EXISTS eventos_permisos;
-DROP TABLE IF EXISTS permisos;
 DROP TABLE IF EXISTS eventos;
 DROP TABLE IF EXISTS reservas;
+DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS estados;
+DROP TABLE IF EXISTS permisos;
 DROP TABLE IF EXISTS tipos_eventos;
 DROP TABLE IF EXISTS espacios_publicos;
-DROP TABLE IF EXISTS empresas;
-DROP TABLE IF EXISTS pres_identes_otb;
-DROP TABLE IF EXISTS usuarios;
+
 DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles (
@@ -21,7 +22,7 @@ CREATE TABLE roles (
 );
 
 CREATE TABLE estados (
-    _id INT PRIMARY KEY,
+    _id INT AUTO_INCREMENT PRIMARY KEY,
     estado VARCHAR(25)
 );
 
@@ -35,7 +36,7 @@ CREATE TABLE usuarios (
     direccion VARCHAR(255),
     telefono VARCHAR(20),
     rol INT,
-    estado INT,
+    estado INT DEFAULT 1,
     FOREIGN KEY (rol) REFERENCES roles(_id),
     FOREIGN KEY (estado) REFERENCES estados(_id)
 );
@@ -45,7 +46,7 @@ CREATE TABLE presidentes_otb (
     usuario INT,
     otb VARCHAR(100),
     documento BLOB,
-    FOREIGN KEY (usuario) REFERENCES usuarios(ci)
+    FOREIGN KEY (usuario) REFERENCES usuarios (ci)
 );
 
 CREATE TABLE empresas (
@@ -53,7 +54,7 @@ CREATE TABLE empresas (
     usuario INT,
     empresa VARCHAR(100),
     documento BLOB,
-    FOREIGN KEY (usuario) REFERENCES usuarios(ci)
+    FOREIGN KEY (usuario) REFERENCES usuarios (ci)
 );
 
 CREATE TABLE espacios_publicos (
@@ -61,21 +62,22 @@ CREATE TABLE espacios_publicos (
     nombre VARCHAR(100),
     descripcion TEXT,
     -- Informacion de coordenadas en caso de Integracion con MAPS API
-    latitud DECIMAL(9,6),
-    longitud DECIMAL(9,6),
+    latitud DECIMAL(9, 6),
+    longitud DECIMAL(9, 6),
     direccion VARCHAR(255)
 );
 
-CREATE TABLE reservas(
+CREATE TABLE reservas (
     _id INT AUTO_INCREMENT PRIMARY KEY,
     usuario INT,
     espacio_publico INT,
     fecha DATE,
     hora_inicio TIME,
     hora_fin TIME,
-    estado VARCHAR(50) DEFAULT 'pendiente',
-    FOREIGN KEY (usuario) REFERENCES usuarios(ci),
-    FOREIGN KEY (espacio_publico) REFERENCES espacios_publicos(_id)
+    estado INT DEFAULT 1,
+    FOREIGN KEY (usuario) REFERENCES usuarios (ci),
+    FOREIGN KEY (espacio_publico) REFERENCES espacios_publicos (_id),
+    FOREIGN KEY (estado) REFERENCES estados (_id)
 );
 
 CREATE TABLE tipos_eventos (
@@ -90,23 +92,24 @@ CREATE TABLE eventos (
     nombre VARCHAR(255),
     descripcion TEXT,
     fecha_evento DATE,
-    FOREIGN KEY (reserva) REFERENCES reservas(_id),
-    FOREIGN KEY (tipo_evento) REFERENCES tipos_eventos(_id)
+    FOREIGN KEY (reserva) REFERENCES reservas (_id),
+    FOREIGN KEY (tipo_evento) REFERENCES tipos_eventos (_id)
 );
 
 CREATE TABLE permisos (
     _id INT AUTO_INCREMENT PRIMARY KEY,
-    tipo_permiso VARCHAR(50) NOT NULL
+    nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE eventos_permisos (
-    _id_evento INT,
-    _id_permiso INT,
+    evento INT,
+    permiso INT,
     documento BLOB,
-    entregado BOOL DEFAULT FALSE,
-    PRIMARY KEY (_id_evento, _id_permiso),
-    FOREIGN KEY (_id_evento) REFERENCES eventos(_id),
-    FOREIGN KEY (_id_permiso) REFERENCES permisos(_id)
+    estado INT DEFAULT 1,
+    PRIMARY KEY (evento, permiso),
+    FOREIGN KEY (evento) REFERENCES eventos (_id),
+    FOREIGN KEY (permiso) REFERENCES permisos (_id),
+    FOREIGN KEY (estado) REFERENCES estados (_id)
 );
 
 CREATE TABLE transferencias_reservas (
@@ -114,17 +117,21 @@ CREATE TABLE transferencias_reservas (
     reserva INT,
     usuario_origen INT,
     usuario_destino INT,
-    fecha DATE DEFAULT (CURRENT_DATE),
-    estado VARCHAR(50) DEFAULT 'pendiente',
-    FOREIGN KEY (reserva) REFERENCES reservas(_id),
-    FOREIGN KEY (usuario_origen) REFERENCES usuarios(ci),
-    FOREIGN KEY (usuario_destino) REFERENCES usuarios(ci)
+    fecha DATE DEFAULT(CURRENT_DATE),
+    estado INT DEFAULT 1,
+    FOREIGN KEY (reserva) REFERENCES reservas (_id),
+    FOREIGN KEY (usuario_origen) REFERENCES usuarios (ci),
+    FOREIGN KEY (usuario_destino) REFERENCES usuarios (ci),
+    FOREIGN KEY (estado) REFERENCES estados (_id)
 );
 
-CREATE TABLE cambios (
-    _id INT AUTO_INCREMENT PRIMARY KEY,
-    descripcion TEXT NOT NULL,
-    tabla_afectada VARCHAR(50),
-    id_afectado INT,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE logs_cambios (
+    _id SERIAL PRIMARY KEY,
+    tabla VARCHAR(50),
+    operacion VARCHAR(10),
+    registro_id INT,
+    usuario_ci VARCHAR(20),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    datos_previos JSON,
+    datos_nuevos JSON
 );

@@ -1,5 +1,5 @@
 -- Inserccion de los datos basicos
-USE proyecto_sisinfo;
+USE espacios_bo;
 
 INSERT INTO roles (rol) VALUES 
     ('super_admin'),
@@ -16,13 +16,13 @@ INSERT INTO estados (estado) VALUES
     ('cancelado-reembolzado'),
     ('por entregar');
     
-INSERT INTO tipos_eventos (tipo_evento) VALUES
+INSERT INTO tipos_eventos (tipo) VALUES
 	('Feria'),
     ('Cultural'),
     ('Social'),
     ('Bienestar Social');
     
-INSERT INTO permisos (nombre_permiso) VALUES
+INSERT INTO permisos (nombre) VALUES
 	('Venta de alimentos y bebidas'),
     ('Venta y Consumo de bebidas alcoholicas'),
     ('Espectaculos publicos'),

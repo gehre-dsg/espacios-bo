@@ -1,4 +1,4 @@
-USE proyecto_sisinfo;
+USE espacios_bo;
 
 SOURCE ./bd/crear_tablas.sql;
 SOURCE ./bd/datos_iniciales.sql;
