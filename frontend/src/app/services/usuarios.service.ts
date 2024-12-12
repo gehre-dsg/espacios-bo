@@ -8,22 +8,11 @@ export class UsuariosService {
   private readonly apiUrl = '/usuarios';
 
   constructor(private axiosService: AxiosService) {}
-
-  // Token fijo para superadministrador (esto será cambiado más adelante)
-  private readonly superAdminToken = 'SuperToken';
-
-  // Método para obtener los encabezados con el token de superadministrador
-  private getAuthHeaders() {
-    return {
-      Authorization: this.superAdminToken,
-    };
-  }
+  
 
   async getUsuarios() {
     try {
-      const response = await this.axiosService.getAxiosInstance().get(this.apiUrl, {
-        headers: this.getAuthHeaders(),
-      });
+      const response = await this.axiosService.getAxiosInstance().get(this.apiUrl);
       return response.data;
     } catch (error: any) {
       console.error('Error al obtener usuarios:', error.response?.data || error.message);
@@ -33,9 +22,7 @@ export class UsuariosService {
 
   async createUsuario(data: { ci_usuario: number; email: string; contrasena: string }) {
     try {
-      const response = await this.axiosService.getAxiosInstance().post(this.apiUrl, data, {
-        headers: this.getAuthHeaders(),
-      });
+      const response = await this.axiosService.getAxiosInstance().post(this.apiUrl, data);
       return response.data;
     } catch (error: any) {
       console.error('Error al crear usuario:', error.response?.data || error.message);
@@ -47,10 +34,7 @@ export class UsuariosService {
     try {
       const response = await this.axiosService.getAxiosInstance().patch(
         `${this.apiUrl}/${ci_usuario}`,
-        data,
-        {
-          headers: this.getAuthHeaders(),
-        }
+        data
       );
       return response.data;
     } catch (error: any) {
