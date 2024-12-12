@@ -1,0 +1,7 @@
+<div class="espacios-container">
+    <div class="espacio" *ngFor="let espacio of espacios">
+      <img [src]="espacio.imagen" alt="{{ espacio.nombre }}">
+      <button [routerLink]="['/reservas/formulario', espacio.id]">Reservar</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,31 @@
+<div class="formulario-container">
+    <h2>Formulario de Reserva: {{ espacio.nombre }}</h2>
+    <form (ngSubmit)="reservar()">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" required>
+  
+      <label for="ci">CI</label>
+      <input id="ci" type="text" required>
+  
+      <label for="otb">Otb</label>
+      <input id="otb" type="text" required>
+  
+      <label for="tipo-evento">Tipo de Evento</label>
+      <input id="tipo-evento" type="text" required>
+  
+      <label for="sector">Sector</label>
+      <input id="sector" type="text" required>
+  
+      <label for="fecha">Fecha</label>
+      <input id="fecha" type="date" required>
+  
+      <label for="tarjeta">Número de Tarjeta</label>
+      <input id="tarjeta" type="text" required>
+  
+      <button type="submit">Reservar</button>
+    </form>
+  
+    <!-- Mapa -->
+    <div id="map"></div>
+  </div>
+  
