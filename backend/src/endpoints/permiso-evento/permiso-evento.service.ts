@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PermisoEvento } from './evento-permiso.entity';
+import { PermisoEvento } from './permiso-evento.entity';
 
 @Injectable()
 export class PermisoEventoService {
@@ -12,7 +12,7 @@ export class PermisoEventoService {
 
   findAll(): Promise<PermisoEvento[]> {
     return this.PermisoEventoRepository.find({
-      relations: ['evento', 'permiso'], // Incluye las relaciones
+      relations: ['evento', 'permiso'],
     });
   }
 

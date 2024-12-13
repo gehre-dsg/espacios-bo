@@ -10,4 +10,4 @@ import { TransferenciaReserva } from './transferencia-reserva.entity';
   controllers: [TransferenciaReservaController],
   exports: [TransferenciaReservaService],
 })
-export class ReservaModule {}
+export class TransferenciaReservaModule {}

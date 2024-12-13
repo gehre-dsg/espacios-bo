@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('permisos')
+@Entity('permisos') // Entidad Estatica
 export class Permiso {
   @PrimaryGeneratedColumn()
-  id: number;
+  _id: number;
 
   @Column({ length: 50 })
-  nombre_permiso: string;
+  nombre: string;
 }

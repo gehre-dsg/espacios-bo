@@ -11,13 +11,13 @@ export class PermisoEvento {
   id_permiso: number;
 
   @ManyToOne(() => Evento)
-  @JoinColumn({ name: 'id_evento' })
+  @JoinColumn({ name: 'evento' })
   evento: Evento;
 
   @ManyToOne(() => Permiso)
-  @JoinColumn({ name: 'id_permiso' })
+  @JoinColumn({ name: 'permiso' })
   permiso: Permiso;
 
-  @Column({ type: 'blob' })
+  @Column({ type: 'blob', nullable: true })
   documento: Buffer;
 }

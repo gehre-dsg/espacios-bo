@@ -8,11 +8,11 @@ export class Evento {
   _id: number;
 
   @ManyToOne(() => Reserva)
-  @JoinColumn({ name: '_id' })
+  @JoinColumn({ name: 'reserva' })
   reserva: Reserva;
 
   @ManyToOne(() => TipoEvento)
-  @JoinColumn({ name: '_id' })
+  @JoinColumn({ name: 'tipo_evento' })
   tipo_evento: TipoEvento;
 
   @Column({ length: 255 })

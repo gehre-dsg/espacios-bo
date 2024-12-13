@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
-import { PermisoEventoService } from './evento-permiso.service';
-import { PermisoEvento } from './evento-permiso.entity';
+import { PermisoEventoService } from './permiso-evento.service';
+import { PermisoEvento } from './permiso-evento.entity';
 
 @Controller('eventos-permisos')
 export class PermisoEventoController {

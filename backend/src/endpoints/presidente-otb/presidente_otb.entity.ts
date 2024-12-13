@@ -7,12 +7,12 @@ export class PresidenteOtb {
   _id: number;
 
   @ManyToOne(() => Usuario)
-  @JoinColumn({ name: 'ci' })
+  @JoinColumn({ name: 'usuario' })
   usuario: Usuario;
 
   @Column({ length: 100 })
   otb: string;
 
-  @Column({ type: 'blob' })
+  @Column({ type: 'blob', nullable: true })
   documento: Buffer;
 }

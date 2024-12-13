@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsuarioModule } from './modules/usuario/usuario.module';
-import { PermisoModule } from './endpoints/permiso/permiso.module'; // Módulo de permiso
-import { EventoModule } from './endpoints/evento/evento.module'; // Módulo de evento
-import { PresidenteOtbModule } from './modules/presidente-otb/presidente_otb.module'; // Módulo de presidente_otb
-import { EmpresaModule } from './modules/empresa/empresa.module';
-import { EventoPermisoModule } from './endpoints/permiso-evento/evento-permiso.module';
+import { UsuarioModule } from './endpoints/usuario/usuario.module';
+import { EventoModule } from './endpoints/evento/evento.module';
+import { PresidenteOtbModule } from './endpoints/presidente-otb/presidente_otb.module';
+import { EmpresaModule } from './endpoints/empresa/empresa.module';
+import { PermisoEventoModule } from './endpoints/permiso-evento/permiso-evento.module';
 import { ReservaModule } from './endpoints/reserva/reserva.module';
+import { TransferenciaReservaModule } from './endpoints/transferencia-reserva/transferencia-reserva.module';
 
 @Module({
   imports: [
@@ -21,13 +21,13 @@ import { ReservaModule } from './endpoints/reserva/reserva.module';
       synchronize: true,
       logging: ['query', 'error'],
     }),
-    UsuarioModule,
-    PermisoModule,
-    EventoModule, // Asegúrate de importar el módulo de Evento
-    PresidenteOtbModule, // Asegúrate de importar el módulo de PresidenteOtb
     EmpresaModule,
-    EventoPermisoModule,
+    EventoModule,
+    PermisoEventoModule,
+    PresidenteOtbModule,
     ReservaModule,
+    TransferenciaReservaModule,
+    UsuarioModule,
   ],
 })
 export class AppModule {}

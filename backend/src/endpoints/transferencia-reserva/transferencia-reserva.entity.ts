@@ -9,21 +9,21 @@ export class TransferenciaReserva {
     _id: number;
 
     @OneToOne(() => Reserva)
-    @JoinColumn({ name: '_id' })
+    @JoinColumn({ name: 'reserva' })
     reseva: number;
 
     @ManyToOne(() => Usuario)
-    @JoinColumn({ name: 'ci' })
+    @JoinColumn({ name: 'usuario_origen' })
     usuario_origen: number;
 
     @ManyToOne(() => Usuario)
-    @JoinColumn({ name: 'ci' })
+    @JoinColumn({ name: 'usuario_destino' })
     usuario_destino: number;
 
     @Column({ type: 'date' })
     fecha: Date;
 
     @OneToOne(() => Estado)
-    @JoinColumn({ name: '_id' })
+    @JoinColumn({ name: 'estado' })
     estado: number;
 }

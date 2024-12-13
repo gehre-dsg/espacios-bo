@@ -7,12 +7,12 @@ export class Empresa {
   _id: number;
 
   @ManyToOne(() => Usuario)
-  @JoinColumn({ name: 'ci' })
+  @JoinColumn({ name: 'usuario' })
   usuario: Usuario;
 
   @Column({ length: 100 })
   empresa: string;
 
-  @Column({ type: 'blob' })
+  @Column({ type: 'blob', nullable: true })
   documento: Buffer;
 }
