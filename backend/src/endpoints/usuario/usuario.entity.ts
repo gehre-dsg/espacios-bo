@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { Rol } from '../rol/rol.entity'
 import { Estado } from '../estado/estado.entity'
 
@@ -28,11 +28,11 @@ export class Usuario {
   @Column({ length: 20 })
   telefono: string;
 
-  @ManyToOne(() => Rol, { eager: false })
-  @JoinColumn({ name: 'id_rol' })
-  rol: number;
+  @ManyToOne(() => Rol)
+  @JoinColumn({ name: '_id' })
+  rol: Rol;
 
-  @ManyToOne(() => Estado, { eager: false })
-  @JoinColumn({ name: 'id_rol' })
-  estado: number;
+  @OneToOne(() => Estado)
+  @JoinColumn({ name: '_id'})
+  estado: Estado;
 }

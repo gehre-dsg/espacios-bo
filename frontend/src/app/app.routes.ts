@@ -6,6 +6,10 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { RegistroDatosComponent } from './registro-datos/registro-datos.component';
 import { AdminComponent } from './admin/admin.component'; // Importar AdminComponent
+import { ReservasComponent } from './reservas/reservas.component';
+import { FormularioComponent } from './reservas/formulario/formulario.component';
+import { EspaciosComponent } from './reservas/espacios/espacios.component';
+
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -15,6 +19,11 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'registro-datos', component: RegistroDatosComponent },
-  { path: 'admin', component: AdminComponent }, // Nueva ruta para administración
-  { path: '**', redirectTo: 'home' },
+  { path: 'admin', component: AdminComponent },
+  { path: 'reservas', component: ReservasComponent },
+  { path: 'reservas/:tipo', component: EspaciosComponent },
+  { path: 'reservas/formulario/:id', component: FormularioComponent },
+  { path: '', redirectTo: '/reservas', pathMatch: 'full' }
 ];
+
+
