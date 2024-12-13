@@ -11,18 +11,18 @@ export class PresidenteOtbService {
     private presidenteOtbRepository: Repository<PresidenteOtb>,
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<PresidenteOtb[]> {
     return this.presidenteOtbRepository.find({ relations: ['usuario'] });
   }
 
   async findOne(id: number): Promise<PresidenteOtb> {
-    return this.presidenteOtbRepository.findOne({where: { id }, relations: ['usuario'],});
+    return this.presidenteOtbRepository.findOne({ where: { _id: id }, relations: ['usuario'], });
   }
 
   async findUsuarioByCi(ci_usuario: number): Promise<Usuario | null> {
-    return this.usuarioRepository.findOne({ where: { ci_usuario } });
+    return this.usuarioRepository.findOne({ where: { ci : ci_usuario } });
   }
 
   async create(presidenteOtbData: Partial<PresidenteOtb>): Promise<PresidenteOtb> {

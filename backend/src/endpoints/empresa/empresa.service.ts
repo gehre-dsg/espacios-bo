@@ -11,14 +11,14 @@ export class EmpresaService {
     private empresaRepository: Repository<Empresa>,
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Empresa[]> {
     return this.empresaRepository.find({ relations: ['usuario'] });
   }
 
   async findOne(id: number): Promise<Empresa> {
-    return this.empresaRepository.findOne({ where: { id }, relations: ['usuario'] });
+    return this.empresaRepository.findOne({ where: { _id: id }, relations: ['usuario'] });
   }
 
   async create(empresa: Partial<Empresa>): Promise<Empresa> {

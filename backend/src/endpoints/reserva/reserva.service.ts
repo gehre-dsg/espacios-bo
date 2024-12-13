@@ -8,14 +8,14 @@ export class ReservaService {
   constructor(
     @InjectRepository(Reserva)
     private reservaRepository: Repository<Reserva>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Reserva[]> {
     return this.reservaRepository.find({ relations: ['usuario', 'espacio_publico'] });
   }
 
   async findOne(id: number): Promise<Reserva> {
-    return this.reservaRepository.findOne({where: { id }, relations: ['usuario', 'espacio_publico'],});
+    return this.reservaRepository.findOne({ where: { _id: id }, relations: ['usuario', 'espacio_publico'], });
   }
 
   async create(reserva: Partial<Reserva>): Promise<Reserva> {

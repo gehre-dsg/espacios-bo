@@ -100,7 +100,7 @@ export class PresidenteOtbController {
 
       // Crear el presidente de OTB
       return await this.presidenteOtbService.create({
-        ci_usuario: usuario, // Pasa el objeto Usuario completo
+        usuario: usuario, // Pasa el objeto Usuario completo
         otb,
         documento,
       });

@@ -8,11 +8,11 @@ export class Reserva {
   _id: number;
 
   @ManyToOne(() => Usuario)
-  @JoinColumn({ name: 'ci_usuario' })
+  @JoinColumn({ name: 'ci' })
   usuario: Usuario;
 
   @ManyToOne(() => EspacioPublico)
-  @JoinColumn({ name: 'id_espacio_publico' })
+  @JoinColumn({ name: '_id' })
   espacio_publico: EspacioPublico;
 
   @Column({ type: 'date' })

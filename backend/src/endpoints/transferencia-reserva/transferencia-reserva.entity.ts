@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 import { Reserva } from '../reserva/reserva.entity';
 import { Usuario } from '../usuario/usuario.entity';
 import { Estado } from '../estado/estado.entity';
@@ -6,24 +6,24 @@ import { Estado } from '../estado/estado.entity';
 @Entity('transferencias-reservas')
 export class TransferenciaReserva {
     @PrimaryGeneratedColumn()
-    _id: number
+    _id: number;
 
     @OneToOne(() => Reserva)
     @JoinColumn({ name: '_id' })
-    reseva: number
+    reseva: number;
 
     @ManyToOne(() => Usuario)
     @JoinColumn({ name: 'ci' })
-    usuario_origen: number
+    usuario_origen: number;
 
     @ManyToOne(() => Usuario)
     @JoinColumn({ name: 'ci' })
-    usuario_destino: number
+    usuario_destino: number;
 
     @Column({ type: 'date' })
-    fecha: Date
+    fecha: Date;
 
     @OneToOne(() => Estado)
     @JoinColumn({ name: '_id' })
-    estado: number
+    estado: number;
 }

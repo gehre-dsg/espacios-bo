@@ -1,6 +1,6 @@
 import {Controller,Get,Post,Delete,Param,Body,Req,BadRequestException,NotFoundException,ForbiddenException,InternalServerErrorException,} from '@nestjs/common';
 import { EventoService } from './evento.service';
-import { Evento } from '../../entities/evento.entity';
+import { Evento } from './evento.entity';
 import { Request } from 'express';
 
 @Controller('eventos')

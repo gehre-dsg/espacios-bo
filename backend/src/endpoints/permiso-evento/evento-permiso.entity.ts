@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
-import { Evento } from './evento.entity';
+import { Evento } from '../evento/evento.entity';
 import { Permiso } from '../permiso/permiso.entity';
 
 @Entity('permisos-eventos')

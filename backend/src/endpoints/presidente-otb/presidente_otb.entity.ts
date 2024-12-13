@@ -7,7 +7,7 @@ export class PresidenteOtb {
   _id: number;
 
   @ManyToOne(() => Usuario)
-  @JoinColumn({ name: 'ci_usuario' })
+  @JoinColumn({ name: 'ci' })
   usuario: Usuario;
 
   @Column({ length: 100 })

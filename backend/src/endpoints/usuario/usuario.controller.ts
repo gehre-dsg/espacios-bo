@@ -66,7 +66,7 @@ async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
       );
     }
 
-    if (usuarioData.id_rol && typeof usuarioData.id_rol !== 'number') {
+    if (usuarioData.rol && typeof usuarioData.rol !== 'number') {
       throw new BadRequestException('El campo id_rol debe ser un número válido');
     }
 
@@ -75,8 +75,8 @@ async create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
     usuarioData.ap_materno = usuarioData.ap_materno || 'Apellido temporal';
     usuarioData.direccion = usuarioData.direccion || 'Sin dirección';
     usuarioData.telefono = usuarioData.telefono || 'Sin teléfono';
-    if (!usuarioData.id_rol) {
-      usuarioData.id_rol = 3;
+    if (!usuarioData.rol) {
+      usuarioData.rol = 3;
     }
 
     return await this.usuarioService.create(usuarioData);
