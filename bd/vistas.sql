@@ -1,6 +1,8 @@
 -- Creacion de vistas
 USE espacios_bo;
 
+DROP PROCEDURE IF EXISTS actualizar_eventos_pasados;
+
 DROP VIEW IF EXISTS usuarios_pendientes;
 
 DROP VIEW IF EXISTS transferencias_pendientes;
@@ -15,14 +17,12 @@ SELECT
 FROM usuarios AS u 
 LEFT JOIN empresas AS e ON u.ci = e.usuario
 LEFT JOIN presidentes_otb as pr ON u.ci = pr.usuario
-WHERE u.estado = 1 AND u.rol NOT IN [1, 2]
-
+WHERE u.estado = 1 AND u.rol NOT IN (1, 2);
 
 CREATE VIEW transferencias_pendientes AS
-SELECT t.*
+SELECT *
 FROM transferencias_reservas AS t
-WHERE
-    t.estado = 1;
+WHERE t.estado = 1;
 
 CREATE VIEW eventos_futuros AS
 SELECT
@@ -87,5 +87,5 @@ END$$
 
 DELIMITER;
 
-CREATE EVENT evento_actualizar_eventos_pasados ON SCHEDULE EVERY DAY DO
+CREATE EVENT evento_actualizar_eventos_pasados ON SCHEDULE EVERY 1 DAY DO
 CALL actualizar_eventos_pasados ();
