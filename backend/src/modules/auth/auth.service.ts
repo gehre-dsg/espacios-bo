@@ -13,7 +13,7 @@ export class AuthService {
     async validateUser(email: string, contrasena: string): Promise<any> {
     const user = await this.usuarioService.findByEmail(email);
     if (user && (await bcrypt.compare(contrasena, user.contrasena))) {
-      const { contrasena, ...result } = user; // Excluir la contraseña
+        const { contrasena, ...result } = user; // Excluir la contraseña
         return result;
     }
     throw new UnauthorizedException('Credenciales inválidas');
