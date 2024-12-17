@@ -23,7 +23,11 @@ export const routes: Routes = [
   { path: 'reservas', component: ReservasComponent },
   { path: 'reservas/:tipo', component: EspaciosComponent },
   { path: 'reservas/formulario/:id', component: FormularioComponent },
-  { path: '', redirectTo: '/reservas', pathMatch: 'full' }
+  { path: '', redirectTo: '/reservas', pathMatch: 'full' },
+  // Reservas
+  { path: 'reservas/:tipo', component: ReservasComponent },
+  { path: 'formulario', component: FormularioComponent },
+  { path: '', redirectTo: '/reservas/plazas', pathMatch: 'full' },
 ];
 
 

@@ -74,7 +74,8 @@ CREATE TABLE `espacios-publicos` (
     altitud DECIMAL(9, 6),
     latitud DECIMAL(9, 6),
     descripcion TEXT,
-    url_imagen VARCHAR(255)
+    url_imagen VARCHAR(255),
+    tipo VARCHAR(10)
 );
 
 CREATE TABLE reservas (

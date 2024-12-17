@@ -1,23 +1,28 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
+import { Entity, ManyToOne, JoinColumn, PrimaryColumn, Column } from 'typeorm';
 import { Evento } from '../evento/evento.entity';
 import { Permiso } from '../permiso/permiso.entity';
+import { Estado } from '../estado/estado.entity';
 
 @Entity('permisos-eventos')
 export class PermisoEvento {
   @PrimaryColumn()
-  id_evento: number;
+  evento: number;
 
   @PrimaryColumn()
-  id_permiso: number;
+  permiso: number;
 
   @ManyToOne(() => Evento)
   @JoinColumn({ name: 'evento' })
-  evento: Evento;
+  evento_obj: Evento;
 
   @ManyToOne(() => Permiso)
   @JoinColumn({ name: 'permiso' })
-  permiso: Permiso;
+  permiso_obj: Permiso;
 
   @Column({ type: 'blob', nullable: true })
   documento: Buffer;
+
+  @ManyToOne(() => Estado)
+  @JoinColumn({ name: 'estado' })
+  estado: Estado;
 }

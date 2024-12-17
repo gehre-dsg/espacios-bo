@@ -1,53 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import * as L from 'leaflet';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { EspacioPublicoService } from '../../services/espacios-publicos.service';
 
 @Component({
   selector: 'app-formulario',
   standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './formulario.component.html',
-  styleUrls: ['./formulario.component.scss']
+  styleUrls: ['./formulario.component.scss'],
 })
 export class FormularioComponent implements OnInit {
-  espacioId: string = ''; // ID del espacio seleccionado
-  espacio: any = {}; // Detalles del espacio seleccionado
+  espacio: any; // Para almacenar el espacio seleccionado
+  reserva = {
+    nombre: '',
+    ci: '',
+    otb: '',
+    tipoEvento: '',
+    sector: '',
+    fecha: '',
+    tarjeta: '',
+  };
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private espacioService: EspacioPublicoService) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.espacioId = params.get('id')!;
-      this.obtenerEspacio(); // Obtener los detalles del espacio seleccionado
-    });
+    // Obtener el espacio seleccionado desde el servicio
+    this.espacio = this.espacioService.getEspacioSeleccionado();
+
+    if (!this.espacio) {
+      console.error('No hay espacio seleccionado.');
+      // Redirigir o manejar el caso de no tener un espacio
+    }
   }
 
-  iniciarMapa(): void {
-    const map = L.map('map').setView([-34.601, -58.379], 13);
+  reservar() {
+    // Aquí puedes enviar la información de la reserva al backend o procesarla localmente
+    console.log('Datos de la reserva:', this.reserva);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    // Agrega el espacio seleccionado como parte de la reserva
+    const reservaFinal = {
+      ...this.reserva,
+      espacio: this.espacio.nombre,
+    };
 
-    // Hacer una solicitud GET a la API para obtener las coordenadas
-    fetch('/api/espacios-publicos')
-      .then(response => response.json())
-      .then(data => {
-        data.forEach(item => {
-          // Crear un marcador por cada coordenada
-          L.marker([item.lat, item.lng])
-            .addTo(map)
-            .bindPopup(`<b>${item.nombre}</b><br>${item.descripcion}`);
-        });
-      })
-      .catch(error => console.error('Error al cargar los datos del mapa:', error));
-  }
+    // Ejemplo de impresión en consola
+    console.log('Reserva final con espacio seleccionado:', reservaFinal);
 
-  obtenerEspacio(): void {
-    this.espacio = { id: this.espacioId, nombre: 'Plaza 1', descripcion: 'Una plaza hermosa' };
-  }
-
-  reservar(): void {
-    // Aquí puedes implementar la lógica para procesar la reserva
-    console.log('Reserva realizada para el espacio', this.espacio);
+    // Aquí podrías hacer una llamada HTTP si tienes un servicio configurado
+    // Ejemplo:
+    // this.espacioService.realizarReserva(reservaFinal).then(...).catch(...);
   }
 }

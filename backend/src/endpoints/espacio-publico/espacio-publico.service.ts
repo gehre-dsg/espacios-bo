@@ -14,6 +14,10 @@ export class EspacioPublicoService {
         return this.espacioRepository.find();
     }
 
+    async findByType(type: string): Promise<EspacioPublico[]> {
+        return this.espacioRepository.findBy({ tipo: type });
+    }
+
     async findById(id: number): Promise<EspacioPublico> {
         return this.espacioRepository.findOneBy({ _id: id });
     }

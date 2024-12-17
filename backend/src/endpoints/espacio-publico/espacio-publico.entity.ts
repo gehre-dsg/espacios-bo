@@ -9,18 +9,18 @@ export class EspacioPublico {
   @Column({ length: 100 })
   nombre: string;
 
-  @Column({ length: 255})
-  url_imagen: string;
-
-  @Column({ type: 'text' })
-  descripcion: string;
+  @Column('decimal', { precision: 9, scale: 6 })
+  altitud: number;
 
   @Column('decimal', { precision: 9, scale: 6 })
   latitud: number;
 
-  @Column('decimal', { precision: 9, scale: 6 })
-  longitud: number;
+  @Column({ type: 'text' })
+  descripcion: string;
 
   @Column({ length: 255 })
-  direccion: string;
+  url_imagen: string;
+
+  @Column({ length: 10 })
+  tipo: string;
 }

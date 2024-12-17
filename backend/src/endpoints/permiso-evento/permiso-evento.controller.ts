@@ -4,45 +4,40 @@ import { PermisoEvento } from './permiso-evento.entity';
 
 @Controller('permisos-eventos')
 export class PermisoEventoController {
-  constructor(private readonly PermisoEventoService: PermisoEventoService) { }
+  constructor(private readonly permisoEventoService: PermisoEventoService) {}
 
   @Get()
   findAll(): Promise<PermisoEvento[]> {
-    return this.PermisoEventoService.findAll();
+    return this.permisoEventoService.findAll();
   }
 
-  @Get(':id_evento/:id_permiso')
+  @Get(':evento/:permiso')
   findOne(
-    @Param('id_evento') id_evento: number,
-    @Param('id_permiso') id_permiso: number,
+    @Param('evento') evento: number,
+    @Param('permiso') permiso: number,
   ): Promise<PermisoEvento> {
-    return this.PermisoEventoService.findOne(id_evento, id_permiso);
+    return this.permisoEventoService.findOne(evento, permiso);
   }
 
   @Post()
-  create(
-    @Body('id_evento') id_evento: number,      // Extraemos id_evento del cuerpo
-    @Body('id_permiso') id_permiso: number,    // Extraemos id_permiso del cuerpo
-    @Body('documento') documento: Buffer,      // Extraemos documento del cuerpo
-  ): Promise<PermisoEvento> {
-    return this.PermisoEventoService.create({ id_evento, id_permiso, documento }); //modificado
+  create(@Body() data: Partial<PermisoEvento>): Promise<PermisoEvento> {
+    return this.permisoEventoService.create(data);
   }
 
-  @Put(':id_evento/:id_permiso')
+  @Put(':evento/:permiso')
   async update(
-    @Param('id_evento') id_evento: number,
-    @Param('id_permiso') id_permiso: number,
+    @Param('evento') evento: number,
+    @Param('permiso') permiso: number,
     @Body() data: Partial<PermisoEvento>,
   ): Promise<void> {
-    await this.PermisoEventoService.update(id_evento, id_permiso, { documento: data.documento });
+    await this.permisoEventoService.update(evento, permiso, data);
   }
 
-
-  @Delete(':id_evento/:id_permiso')
+  @Delete(':evento/:permiso')
   delete(
-    @Param('id_evento') id_evento: number,
-    @Param('id_permiso') id_permiso: number,
+    @Param('evento') evento: number,
+    @Param('permiso') permiso: number,
   ): Promise<void> {
-    return this.PermisoEventoService.delete(id_evento, id_permiso);
+    return this.permisoEventoService.delete(evento, permiso);
   }
 }

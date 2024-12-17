@@ -7,36 +7,36 @@ import { PermisoEvento } from './permiso-evento.entity';
 export class PermisoEventoService {
   constructor(
     @InjectRepository(PermisoEvento)
-    private readonly PermisoEventoRepository: Repository<PermisoEvento>,
+    private readonly permisoEventoRepository: Repository<PermisoEvento>,
   ) {}
 
   findAll(): Promise<PermisoEvento[]> {
-    return this.PermisoEventoRepository.find({
+    return this.permisoEventoRepository.find({
       relations: ['evento', 'permiso'],
     });
   }
 
-  findOne(id_evento: number, id_permiso: number): Promise<PermisoEvento> {
-    return this.PermisoEventoRepository.findOne({
-      where: { id_evento, id_permiso },
+  findOne(evento: number, permiso: number): Promise<PermisoEvento> {
+    return this.permisoEventoRepository.findOne({
+      where: { evento, permiso },
       relations: ['evento', 'permiso'],
     });
   }
 
   create(data: Partial<PermisoEvento>): Promise<PermisoEvento> {
-    const nuevoPermisoEvento = this.PermisoEventoRepository.create(data);
-    return this.PermisoEventoRepository.save(nuevoPermisoEvento);
+    const nuevoPermisoEvento = this.permisoEventoRepository.create(data);
+    return this.permisoEventoRepository.save(nuevoPermisoEvento);
   }
 
   async update(
-    id_evento: number,
-    id_permiso: number,
+    evento: number,
+    permiso: number,
     data: Partial<PermisoEvento>,
   ): Promise<void> {
-    await this.PermisoEventoRepository.update({ id_evento, id_permiso }, data);
+    await this.permisoEventoRepository.update({ evento, permiso }, data);
   }
 
-  async delete(id_evento: number, id_permiso: number): Promise<void> {
-    await this.PermisoEventoRepository.delete({ id_evento, id_permiso });
+  async delete(evento: number, permiso: number): Promise<void> {
+    await this.permisoEventoRepository.delete({ evento, permiso });
   }
 }
