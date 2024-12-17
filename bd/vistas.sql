@@ -3,13 +3,13 @@ USE espacios_bo;
 
 DROP PROCEDURE IF EXISTS actualizar_eventos_pasados;
 
-DROP VIEW IF EXISTS usuarios_pendientes;
+DROP VIEW IF EXISTS `usuarios-pendientes`;
 
-DROP VIEW IF EXISTS transferencias_pendientes;
+DROP VIEW IF EXISTS `transferencias-pendientes`;
 
-DROP VIEW IF EXISTS eventos_futuros;
+DROP VIEW IF EXISTS `eventos-futuros`;
 
-CREATE VIEW usuarios_pendientes AS
+CREATE VIEW `usuarios-pendientes` AS
 SELECT
     CONCAT_WS(' ', u.nombre, u.ap_paterno, u.ap_materno) as nombre,
     u.email AS correo,
@@ -19,12 +19,12 @@ LEFT JOIN empresas AS e ON u.ci = e.usuario
 LEFT JOIN presidentes_otb as pr ON u.ci = pr.usuario
 WHERE u.estado = 1 AND u.rol NOT IN (1, 2);
 
-CREATE VIEW transferencias_pendientes AS
+CREATE VIEW `transferencias-pendientes` AS
 SELECT *
 FROM transferencias_reservas AS t
 WHERE t.estado = 1;
 
-CREATE VIEW eventos_futuros AS
+CREATE VIEW `eventos-futuros` AS
 SELECT
     e.nombre AS evento,
     e.descripcion AS descripcion,
@@ -40,9 +40,9 @@ WHERE
 
 -- VISTAS "MATERIALIZADAS"
 
-DROP TABLE IF EXISTS eventos_pasados;
+DROP TABLE IF EXISTS `eventos-pasados`;
 
-CREATE TABLE eventos_pasados (
+CREATE TABLE `eventos-pasados` (
     _id INT PRIMARY KEY,
     evento VARCHAR(255),
     descripcion TEXT,

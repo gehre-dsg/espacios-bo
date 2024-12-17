@@ -8,7 +8,6 @@ export class UsuariosService {
   private readonly apiUrl = '/usuarios';
 
   constructor(private axiosService: AxiosService) {}
-  
 
   async getUsuarios() {
     try {

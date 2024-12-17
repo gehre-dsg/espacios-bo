@@ -8,7 +8,6 @@ export class AxiosService {
   private axiosInstance: AxiosInstance;
 
   constructor() {
-
     this.axiosInstance = axios.create({
       baseURL: 'http://localhost:3000',
       headers: {

@@ -43,7 +43,6 @@ export class FormularioComponent implements OnInit {
   }
 
   obtenerEspacio(): void {
-    // Aquí se simula obtener los detalles del espacio según el ID
     this.espacio = { id: this.espacioId, nombre: 'Plaza 1', descripcion: 'Una plaza hermosa' };
   }
 

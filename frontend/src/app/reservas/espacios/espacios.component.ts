@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EspacioPublicoService } from '../../services/espacios-publicos.service';
 import { RouterModule } from '@angular/router'; // IMPORTANTE: Asegúrate de importar RouterModule
 
 @Component({
