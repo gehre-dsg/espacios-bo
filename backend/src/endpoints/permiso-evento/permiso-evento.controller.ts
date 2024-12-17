@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
 import { PermisoEventoService } from './permiso-evento.service';
 import { PermisoEvento } from './permiso-evento.entity';
 
-@Controller('eventos-permisos')
+@Controller('permisos-eventos')
 export class PermisoEventoController {
   constructor(private readonly PermisoEventoService: PermisoEventoService) { }
 

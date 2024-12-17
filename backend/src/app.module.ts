@@ -7,6 +7,7 @@ import { EmpresaModule } from './endpoints/empresa/empresa.module';
 import { PermisoEventoModule } from './endpoints/permiso-evento/permiso-evento.module';
 import { ReservaModule } from './endpoints/reserva/reserva.module';
 import { TransferenciaReservaModule } from './endpoints/transferencia-reserva/transferencia-reserva.module';
+import { EspacioPublicoModule } from './endpoints/espacio-publico/espacio-publico.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TransferenciaReservaModule } from './endpoints/transferencia-reserva/tr
     ReservaModule,
     TransferenciaReservaModule,
     UsuarioModule,
+    EspacioPublicoModule,
   ],
 })
 export class AppModule {}

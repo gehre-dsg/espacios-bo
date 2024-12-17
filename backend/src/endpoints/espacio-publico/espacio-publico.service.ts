@@ -15,10 +15,10 @@ export class EspacioPublicoService {
     }
 
     async findById(id: number): Promise<EspacioPublico> {
-        return this.espacioRepository.findOne({ where: { _id: id } });
+        return this.espacioRepository.findOneBy({ _id: id });
     }
 
     async findByName(name: string): Promise<EspacioPublico> {
-        return this.espacioRepository.findOne({ where: { nombre: name } });
+        return this.espacioRepository.findOneBy({ nombre: name });
     }
 }

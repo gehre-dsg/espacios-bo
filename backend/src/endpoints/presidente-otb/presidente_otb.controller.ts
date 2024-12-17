@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { PresidenteOtbService } from './presidente_otb.service';
 import { PresidenteOtb } from './presidente_otb.entity';
 
-@Controller('presidentes_otb')
+@Controller('presidentes-otb')
 export class PresidenteOtbController {
   constructor(private readonly presidenteOtbService: PresidenteOtbService) {}
 

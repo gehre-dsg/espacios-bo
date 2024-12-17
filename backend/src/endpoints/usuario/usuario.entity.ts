@@ -33,7 +33,7 @@ export class Usuario {
   @JoinColumn({ name: 'rol' })
   rol: Rol;
 
-  @OneToOne(() => Estado)
+  @ManyToOne(() => Estado)
   @JoinColumn({ name: 'estado'})
   estado: Estado;
 }
