@@ -12,22 +12,22 @@ export class UsuarioController {
 
   // Ruta protegida: solo usuarios autenticados
   @Get()
-  @UseGuards(AuthGuard)  // Protege esta ruta con el AuthGuard
+  @UseGuards(AuthGuard)
   findAll(): Promise<Usuario[]> {
     return this.usuarioService.findAll();
   }
 
   // Ruta protegida: solo usuarios autenticados
   @Get(':id')
-  @UseGuards(AuthGuard)  // Protege esta ruta con el AuthGuard
+  @UseGuards(AuthGuard)
   findOne(@Param('id') id: number): Promise<Usuario> {
     return this.usuarioService.findOne(id);
   }
 
   // Ruta protegida y solo accesible para el rol 'admin'
   @Post()
-  @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
-  @Roles('admin')  // Solo usuarios con rol 'admin' pueden acceder
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(1)
   create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
     try {
       usuarioData.nombre = usuarioData.nombre || 'Usuario temporal';
@@ -51,7 +51,7 @@ export class UsuarioController {
   // Ruta protegida: solo usuarios autenticados y con rol 'admin'
   @Put(':id')
   @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
-  @Roles('admin')  // Solo los 'admin' pueden acceder
+  @Roles(1)  // Solo los 'admin' pueden acceder
   update(@Param('id') id: number, @Body() usuarioData: Partial<Usuario>): Promise<void> {
     return this.usuarioService.update(id, usuarioData);
   }
@@ -81,7 +81,7 @@ export class UsuarioController {
   // Ruta protegida: solo usuarios autenticados y con rol 'admin'
   @Delete(':id')
   @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
-  @Roles('admin')  // Solo los 'admin' pueden acceder
+  @Roles(1)  // Solo los 'admin' pueden acceder
   delete(@Param('id') id: number): Promise<void> {
     return this.usuarioService.delete(id);
   }

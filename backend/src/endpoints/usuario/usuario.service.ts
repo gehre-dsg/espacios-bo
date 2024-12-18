@@ -22,7 +22,10 @@ export class UsuarioService {
 
   //para usar en el auth.service.ts
   async findByEmail(email: string): Promise<Usuario> {
-    const usuario = await this.usuarioRepository.findOneBy({ email });
+    const usuario = await this.usuarioRepository.findOne({
+      where: { email },
+      relations: ['rol'],
+    });
     if (!usuario) {
       throw new NotFoundException(`No se encontró el usuario con el email ${email}`);
     }
