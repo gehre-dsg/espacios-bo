@@ -13,8 +13,8 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Configuración del AuthGuard globala
-  //const jwtService = app.get(JwtService);
+  // Configuración del AuthGuard global
+  const jwtService = app.get(JwtService);
   //app.useGlobalGuards(new AuthGuard(jwtService));
 
   // Puerto de escucha

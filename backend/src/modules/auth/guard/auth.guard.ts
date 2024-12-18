@@ -7,9 +7,20 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const { url } = request; // Obtener la URL de la solicitud
+    const { url } = request;
 
-    // Lógica de autenticación normal para otras rutas
+    // esta webada esta hardcodeada para migrar las contrasenias para que funcione jwt
+    //if (url === '/usuarios/migrate-passwords') {
+      //console.log('Acceso permitido: ruta pública migrate-passwords.');
+      //return true;
+    //}
+
+    // Permitir acceso público al endpoint de login
+    if (url === '/auth/login') {
+      console.log('Acceso permitido: ruta pública login.');
+      return true; // No requiere autenticación
+    }
+
     const token = request.headers.authorization?.split(' ')[1];
     if (!token) {
       throw new UnauthorizedException('No se ha proporcionado el token');

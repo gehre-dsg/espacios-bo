@@ -86,4 +86,12 @@ export class UsuarioController {
     return this.usuarioService.delete(id);
   }
 
+  @Patch('migrate-passwords')
+  @UseGuards(AuthGuard)
+  async migratePasswords(): Promise<string> {
+    console.log('Llamando a migratePasswords en el servicio...');
+    await this.usuarioService.migratePasswords();
+    return 'Migración de contraseñas completada.';
+  }
+
 }

@@ -74,5 +74,31 @@ export class UsuarioService {
   async delete(id: number): Promise<void> {
     await this.usuarioRepository.delete(id);
   }
+
+  async migratePasswords(): Promise<void> {
+    console.log('Iniciando migración de contraseñas...');
+  
+    const usuarios = await this.usuarioRepository.find();
+    console.log(`Usuarios encontrados: ${usuarios.length}`);
+  
+    for (const usuario of usuarios) {
+      if (!usuario.contrasena.startsWith('$2b$')) {
+        console.log(`Migrando contraseña para usuario con ID ${usuario.ci}...`);
+  
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(usuario.contrasena, salt);
+  
+        await this.usuarioRepository.update(usuario.ci, {
+          contrasena: hashedPassword,
+        });
+  
+        console.log(`Contraseña migrada correctamente para usuario con ID ${usuario.ci}`);
+      } else {
+        console.log(`El usuario con ID ${usuario.ci} ya tiene una contraseña hasheada.`);
+      }
+    }
+  
+    console.log('Migración de contraseñas completada.');
+  }
   
 }
