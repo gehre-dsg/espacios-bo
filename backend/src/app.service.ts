@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { UsuarioService } from './modules/usuario/usuario.service';
+import { UsuarioService } from './endpoints/usuario/usuario.service'; 
 
 @Injectable()
 export class AppService {
