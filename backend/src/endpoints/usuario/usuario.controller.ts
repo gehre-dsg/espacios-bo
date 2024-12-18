@@ -1,14 +1,10 @@
 import { Controller, Get, Post, Put, Patch, Delete, Body, Param, BadRequestException, InternalServerErrorException, NotFoundException, UseGuards } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
-<<<<<<< HEAD:backend/src/endpoints/usuario/usuario.controller.ts
 import { Usuario } from './usuario.entity';
+import { AuthGuard } from 'src/modules/auth/guard/auth.guard';  // Importa el AuthGuard
+import { RolesGuard } from 'src/modules/auth/roles/roles.guard';   // Importa el RolesGuard
+import { Roles } from 'src/modules/auth/roles/roles.decorator';   // Importa el decorador personalizado de roles
 
-=======
-import { Usuario } from '../../entities/usuario.entity';
-import { AuthGuard } from '../auth/guard/auth.guard';  // Importa el AuthGuard
-import { RolesGuard } from '../auth/roles/roles.guard';  // Importa el RolesGuard
-import { Roles } from '../auth/roles/roles.decorator';  // Importa el decorador personalizado de roles
->>>>>>> autenticacion:backend/src/modules/usuario/usuario.controller.ts
 
 @Controller('usuarios')
 export class UsuarioController {
