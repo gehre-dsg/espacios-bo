@@ -1,12 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-<<<<<<< HEAD:backend/src/endpoints/usuario/usuario.service.ts
 import { Usuario } from './usuario.entity';
-=======
 import * as bcrypt from 'bcrypt'; // Importar bcrypt para el hashing de contraseñas
-import { Usuario } from '../../entities/usuario.entity';
->>>>>>> autenticacion:backend/src/modules/usuario/usuario.service.ts
+
 
 @Injectable()
 export class UsuarioService {
