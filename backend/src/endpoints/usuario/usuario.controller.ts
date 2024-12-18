@@ -1,23 +1,37 @@
-import { Controller, Get, Post, Put, Patch, Delete, Body, Param, BadRequestException, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Delete, Body, Param, BadRequestException, InternalServerErrorException, NotFoundException, UseGuards } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
+<<<<<<< HEAD:backend/src/endpoints/usuario/usuario.controller.ts
 import { Usuario } from './usuario.entity';
 
+=======
+import { Usuario } from '../../entities/usuario.entity';
+import { AuthGuard } from '../auth/guard/auth.guard';  // Importa el AuthGuard
+import { RolesGuard } from '../auth/roles/roles.guard';  // Importa el RolesGuard
+import { Roles } from '../auth/roles/roles.decorator';  // Importa el decorador personalizado de roles
+>>>>>>> autenticacion:backend/src/modules/usuario/usuario.controller.ts
 
 @Controller('usuarios')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) { }
 
+  // Ruta protegida: solo usuarios autenticados
   @Get()
+  @UseGuards(AuthGuard)  // Protege esta ruta con el AuthGuard
   findAll(): Promise<Usuario[]> {
     return this.usuarioService.findAll();
   }
 
+  // Ruta protegida: solo usuarios autenticados
   @Get(':id')
+  @UseGuards(AuthGuard)  // Protege esta ruta con el AuthGuard
   findOne(@Param('id') id: number): Promise<Usuario> {
     return this.usuarioService.findOne(id);
   }
 
+  // Ruta protegida y solo accesible para el rol 'admin'
   @Post()
+  @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
+  @Roles('admin')  // Solo usuarios con rol 'admin' pueden acceder
   create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
     try {
       usuarioData.nombre = usuarioData.nombre || 'Usuario temporal';
@@ -38,13 +52,17 @@ export class UsuarioController {
     }
   }
 
-
+  // Ruta protegida: solo usuarios autenticados y con rol 'admin'
   @Put(':id')
+  @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
+  @Roles('admin')  // Solo los 'admin' pueden acceder
   update(@Param('id') id: number, @Body() usuarioData: Partial<Usuario>): Promise<void> {
     return this.usuarioService.update(id, usuarioData);
   }
 
+  // Ruta protegida: solo usuarios autenticados
   @Patch(':id')
+  @UseGuards(AuthGuard)  // Protege esta ruta con el AuthGuard
   async updatePartial(
     @Param('id') id: number,
     @Body() partialData: Partial<Usuario>,
@@ -64,8 +82,12 @@ export class UsuarioController {
     }
   }
 
+  // Ruta protegida: solo usuarios autenticados y con rol 'admin'
   @Delete(':id')
+  @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
+  @Roles('admin')  // Solo los 'admin' pueden acceder
   delete(@Param('id') id: number): Promise<void> {
     return this.usuarioService.delete(id);
   }
+
 }
