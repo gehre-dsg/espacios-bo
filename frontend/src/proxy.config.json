@@ -1,6 +1,6 @@
 {
     "/*": {
-        "target" : "http://localhost:3000",
+        "target" : "https://api-espacios-bo.onrender.com",
         "secure" : false,
         "logLevel" : "debug"
     }

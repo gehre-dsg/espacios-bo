@@ -8,16 +8,16 @@ async function bootstrap() {
 
   // Configuración de CORS
   app.enableCors({
-    origin: 'http://localhost:4200', // Dominio de Angular
+    origin: 'https://espacios-bolivia.onrender.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
   });
 
   // Configuración del AuthGuard global
   const jwtService = app.get(JwtService);
-  //app.useGlobalGuards(new AuthGuard(jwtService));
+  app.useGlobalGuards(new AuthGuard(jwtService));
 
-  // Puerto de escucha
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

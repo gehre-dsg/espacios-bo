@@ -11,10 +11,11 @@ export class AxiosService {
 
   constructor(private injector: Injector) {
     this.axiosInstance = axios.create({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'https://api-espacios-bo.onrender.com',
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
 
     this.axiosInstance.interceptors.request.use(
