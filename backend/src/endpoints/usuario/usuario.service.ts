@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario } from './usuario.entity';
-import * as bcrypt from 'bcrypt'; // Importar bcrypt para el hashing de contraseñas
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
