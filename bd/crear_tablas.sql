@@ -3,6 +3,8 @@ USE espacios_bo;
 
 DROP TABLE IF EXISTS `logs-cambios`;
 
+DROP TABLE IF EXISTS `tarjetas-usuarios`;
+
 DROP TABLE IF EXISTS `transferencias-reservas`;
 
 DROP TABLE IF EXISTS `empresas`;
@@ -134,6 +136,16 @@ CREATE TABLE `transferencias-reservas` (
     FOREIGN KEY (usuario_origen) REFERENCES `usuarios` (ci),
     FOREIGN KEY (usuario_destino) REFERENCES `usuarios` (ci),
     FOREIGN KEY (estado) REFERENCES `estados` (_id)
+);
+
+CREATE TABLE `tarjetas-usuarios` (
+    usuario INT,
+    numero_tarjeta VARCHAR(19),
+    saldo DECIMAL(9.6),
+    caducidad DATE,
+    cvc VARCHAR(4),
+    PRIMARY KEY (usuario, numero_tarjeta),
+    FOREIGN KEY (usuario) REFERENCES `usuarios` (ci)
 );
 
 CREATE TABLE `logs-cambios` (
