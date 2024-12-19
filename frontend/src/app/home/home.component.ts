@@ -1,7 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import axios from 'axios';
 import { Router } from '@angular/router';
 import { EspacioPublicoService } from './../services/espacios-publicos.service';
 
@@ -13,7 +12,7 @@ import { EspacioPublicoService } from './../services/espacios-publicos.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private router: Router) {
+  constructor(private router: Router, private espacioServicio: EspacioPublicoService){
   }
 
   highlights = [
