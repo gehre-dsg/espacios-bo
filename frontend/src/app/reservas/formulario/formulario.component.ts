@@ -1,32 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { EspacioPublicoService } from '../../services/espacios-publicos.service';
+import { ReservaService } from '../../services/reserva.service';
 
 @Component({
   selector: 'app-formulario',
   standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './formulario.component.html',
-  styleUrls: ['./formulario.component.scss']
+  styleUrls: ['./formulario.component.scss'],
 })
 export class FormularioComponent implements OnInit {
-  espacioId: string = ''; // ID del espacio seleccionado
-  espacio: any = {}; // Detalles del espacio seleccionado
+  espacio: any;
+  reserva = {
+    nombre: '',
+    ci: '',
+    otb: '',
+    tipoEvento: '',
+    sector: '',
+    fecha: '',
+    tarjeta: '',
+  };
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private espacioService: EspacioPublicoService, private reservaService: ReservaService) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.espacioId = params.get('id')!;
-      this.obtenerEspacio(); // Obtener los detalles del espacio seleccionado
-    });
+    this.espacio = this.espacioService.getEspacioSeleccionado();
+    console.log(this.espacio.data);
+
+    if (!this.espacio) {
+      console.error('No hay espacio seleccionado.');
+    }
   }
 
-  obtenerEspacio(): void {
-    // Aquí se simula obtener los detalles del espacio según el ID
-    this.espacio = { id: this.espacioId, nombre: 'Plaza 1', descripcion: 'Una plaza hermosa' };
+  ngSubmit() {
+    this.reservar();
   }
 
-  reservar(): void {
-    // Aquí puedes implementar la lógica para procesar la reserva
-    console.log('Reserva realizada para el espacio', this.espacio);
+  async reservar() {
+    console.log('Datos de la reserva:', this.reserva);
+
+    const reservaFinal = {
+      usuario: Number(this.reserva.ci),
+      espacio_publico: this.espacio._id,
+      fecha: this.reserva.fecha,
+      hora_inicio: '8:00:00',
+      hora_fin: '18:00:00'
+    };
+    console.log(reservaFinal);
+    try {
+      const response = await this.reservaService.postReserva(reservaFinal);
+      return response.data;
+    } catch (error: any){
+      console.log('No se pudo realizar la reserva');
+      throw error;
+    }
   }
 }

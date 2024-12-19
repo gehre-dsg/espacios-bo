@@ -1,17 +1,31 @@
 <div class="container-buttons">
-    <button class="espacio-btn" [routerLink]="['/reservas/plazas']">
-      <img src="https://img.icons8.com/ios/50/ffffff/park.png" alt="Plaza Icon">
-      Plazas
-    </button>
-  
-    <button class="espacio-btn" [routerLink]="['/reservas/areas-deportivas']">
-      <img src="https://img.icons8.com/ios/50/ffffff/soccer-ball.png" alt="Áreas Deportivas Icon">
-      Áreas Deportivas
-    </button>
-  
-    <button class="espacio-btn" [routerLink]="['/reservas/cultural']">
-      <img src="https://img.icons8.com/ios/50/ffffff/classroom.png" alt="Cultural Icon">
-      Cultural
-    </button>
-  </div>
-  
+  <button class="espacio-btn" [routerLink]="['/reservas/plazas']">
+    <img src="https://img.icons8.com/ios/50/ffffff/park.png" alt="Plaza Icon" />
+    Plazas
+  </button>
+
+  <button class="espacio-btn" [routerLink]="['/reservas/areas-deportivas']">
+    <img src="https://img.icons8.com/ios/50/ffffff/soccer-ball.png" alt="Áreas Deportivas Icon" />
+    Áreas Deportivas
+  </button>
+
+  <button class="espacio-btn" [routerLink]="['/reservas/cultural']">
+    <img src="https://img.icons8.com/ios/50/ffffff/classroom.png" alt="Cultural Icon" />
+    Cultural
+  </button>
+</div>
+
+<h1>Espacios Públicos: {{ tipo | titlecase }}</h1>
+
+<div *ngIf="espacios.length > 0; else noEspacios">
+  <ul>
+    <li *ngFor="let espacio of espacios">
+      {{ espacio.nombre }}
+      <button (click)="seleccionarEspacio(espacio)">Seleccionar</button>
+    </li>
+  </ul>
+</div>
+
+<ng-template #noEspacios>
+  <p>No hay espacios públicos disponibles para "{{ tipo }}".</p>
+</ng-template>

@@ -9,6 +9,8 @@ import { AdminComponent } from './admin/admin.component'; // Importar AdminCompo
 import { ReservasComponent } from './reservas/reservas.component';
 import { FormularioComponent } from './reservas/formulario/formulario.component';
 import { EspaciosComponent } from './reservas/espacios/espacios.component';
+import { CalendarioEventosComponent } from './home/calendario-eventos/calendario-eventos.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -19,11 +21,17 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'registro-datos', component: RegistroDatosComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'reservas', component: ReservasComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+  { path: 'reservas', component: ReservasComponent},
   { path: 'reservas/:tipo', component: EspaciosComponent },
   { path: 'reservas/formulario/:id', component: FormularioComponent },
-  { path: '', redirectTo: '/reservas', pathMatch: 'full' }
+  { path: '', redirectTo: '/reservas', pathMatch: 'full' },
+  { path: '', component: ReservasComponent },
+  { path: 'calendario', component: CalendarioEventosComponent },
+  // Reservas
+  { path: 'reservas/:tipo', component: ReservasComponent },
+  { path: 'formulario', component: FormularioComponent },
+  { path: '', redirectTo: '/reservas/plazas', pathMatch: 'full' },
 ];
 
 

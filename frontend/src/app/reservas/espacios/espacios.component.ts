@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router'; // IMPORTANTE: Asegúrate de importar RouterModule
+import { EspacioPublicoService } from '../../services/espacios-publicos.service';
 
 @Component({
   selector: 'app-espacios',
@@ -9,16 +10,21 @@ import { RouterModule } from '@angular/router'; // IMPORTANTE: Asegúrate de imp
   templateUrl: './espacios.component.html',
   styleUrls: ['./espacios.component.scss']
 })
-export class EspaciosComponent {
-  espacios: any[] = [
-    { id: 1, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 1' },
-    { id: 2, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 2' },
-    { id: 3, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 3' },
-    { id: 4, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 4' },
-    { id: 5, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 5' },
-    { id: 6, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 6' },
-    { id: 7, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 7' },
-    { id: 8, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 8' },
-    { id: 9, imagen: 'https://via.placeholder.com/150', nombre: 'Espacio 9' },
-  ];
+export class EspaciosComponent implements OnInit {
+  espacios: any[] = [];
+
+  constructor(private espacioPublicoService: EspacioPublicoService) {}
+
+  async ngOnInit(): Promise<void> {
+    try {
+      this.espacios = await this.espacioPublicoService.getAll();
+      console.log('Datos cargados correctamente', this.espacios);
+    } catch (error) {
+      console.error('Error al cargar los espacios publicos:', error);
+    }
+  }
+
+  selecEspacio(espacio: any) {
+    this.espacioPublicoService.setEspacioSeleccionado(espacio);
+  }
 }

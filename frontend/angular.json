@@ -34,7 +34,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
@@ -93,7 +94,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@fullcalendar/core/main.css",
+  "node_modules/@fullcalendar/daygrid/main.css",
+  "node_modules/@fullcalendar/timegrid/main.css"
             ],
             "scripts": []
           }
