@@ -19,9 +19,11 @@ export class UsuariosService {
     }
   }
 
-  async createUsuario(data: { ci_usuario: number; email: string; contrasena: string }) {
+  async createUsuario(data: { ci: number; email: string; contrasena: string }) {
     try {
-      const response = await this.axiosService.getAxiosInstance().post(this.apiUrl, data);
+      const response = await this.axiosService.getAxiosInstance().post(this.apiUrl, data, {
+        skipAuth: true,
+      } as any);
       return response.data;
     } catch (error: any) {
       console.error('Error al crear usuario:', error.response?.data || error.message);
@@ -29,10 +31,10 @@ export class UsuariosService {
     }
   }
 
-  async updateUsuarioDatos(ci_usuario: number, data: any) {
+  async updateUsuarioDatos(ci: number, data: any) {
     try {
       const response = await this.axiosService.getAxiosInstance().patch(
-        `${this.apiUrl}/${ci_usuario}`,
+        `${this.apiUrl}/${ci}`,
         data
       );
       return response.data;

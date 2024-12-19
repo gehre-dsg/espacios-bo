@@ -10,24 +10,19 @@ import { Roles } from 'src/modules/auth/roles/roles.decorator';   // Importa el 
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) { }
 
-  // Ruta protegida: solo usuarios autenticados
   @Get()
   @UseGuards(AuthGuard)
   findAll(): Promise<Usuario[]> {
     return this.usuarioService.findAll();
   }
 
-  // Ruta protegida: solo usuarios autenticados
   @Get(':id')
   @UseGuards(AuthGuard)
   findOne(@Param('id') id: number): Promise<Usuario> {
     return this.usuarioService.findOne(id);
   }
 
-  // Ruta protegida y solo accesible para el rol 'admin'
   @Post()
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles(1)
   create(@Body() usuarioData: Partial<Usuario>): Promise<Usuario> {
     try {
       usuarioData.nombre = usuarioData.nombre || 'Usuario temporal';
@@ -48,17 +43,15 @@ export class UsuarioController {
     }
   }
 
-  // Ruta protegida: solo usuarios autenticados y con rol 'admin'
   @Put(':id')
-  @UseGuards(AuthGuard, RolesGuard)  // Protege con AuthGuard y RolesGuard
-  @Roles(1)  // Solo los 'admin' pueden acceder
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(1)
   update(@Param('id') id: number, @Body() usuarioData: Partial<Usuario>): Promise<void> {
     return this.usuarioService.update(id, usuarioData);
   }
 
-  // Ruta protegida: solo usuarios autenticados
   @Patch(':id')
-  @UseGuards(AuthGuard)  // Protege esta ruta con el AuthGuard
+  @UseGuards(AuthGuard)
   async updatePartial(
     @Param('id') id: number,
     @Body() partialData: Partial<Usuario>,

@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { AuthService } from './auth.service';
+import { CustomAxiosRequestConfig } from './custom-axios-request-config';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +16,26 @@ export class AxiosService {
         'Content-Type': 'application/json',
       },
     });
-    
-    this.axiosInstance.interceptors.request.use((config) => {
-      const authService = this.injector.get(AuthService); // Resolver AuthService dinámicamente
-      const token = authService.getToken();
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+
+    this.axiosInstance.interceptors.request.use(
+      (config: InternalAxiosRequestConfig & CustomAxiosRequestConfig) => {
+        const authService = this.injector.get(AuthService);
+
+        // Verificar si se debe omitir el token
+        if (!config.skipAuth) {
+          const token = authService.getToken();
+          if (token) {
+            config.headers = config.headers || {};
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+        }
+
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
       }
-      return config;
-    });
+    );
   }
 
   getAxiosInstance(): AxiosInstance {
