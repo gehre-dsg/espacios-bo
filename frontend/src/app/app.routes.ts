@@ -11,6 +11,7 @@ import { FormularioComponent } from './reservas/formulario/formulario.component'
 import { EspaciosComponent } from './reservas/espacios/espacios.component';
 import { CalendarioEventosComponent } from './home/calendario-eventos/calendario-eventos.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PagoComponent } from './pago/pago.component';
 
 
 export const routes: Routes = [
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: 'reservas/:tipo', component: ReservasComponent },
   { path: 'formulario', component: FormularioComponent },
   { path: '', redirectTo: '/reservas/plazas', pathMatch: 'full' },
+  { path: 'pago', component: PagoComponent}
 ];
 
 
