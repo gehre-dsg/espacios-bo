@@ -157,3 +157,46 @@
   background-color: #005f47; /* Verde más oscuro al pasar el mouse */
   transform: scale(1.08); /* Efecto de escala más notorio */
 }
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  flex: 0 0 calc(100% / 3); /* Tres imágenes visibles */
+  padding: 10px;
+  text-align: center;
+}
+
+.carousel-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+button.prev,
+button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}
