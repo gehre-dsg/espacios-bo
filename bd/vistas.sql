@@ -37,7 +37,7 @@ WHERE
 
 -- VISTAS "MATERIALIZADAS"
 
-DROP TABLE IF EXISTS `eventos-pasados`;
+DROP TABLE IF EXISTS `vw-eventos-pasados`;
 
 CREATE TABLE `vw-eventos-pasados` (
     _id INT PRIMARY KEY,
@@ -48,6 +48,8 @@ CREATE TABLE `vw-eventos-pasados` (
     INDEX (fecha, lugar, evento),
     FOREIGN KEY (_id) REFERENCES eventos(_id)
 );
+
+DELIMITER ;
 
 DELIMITER $$
 
@@ -82,7 +84,7 @@ BEGIN
     );
 END$$
 
-DELIMITER;
+DELIMITER ;
 
 CREATE EVENT evento_actualizar_eventos_pasados ON SCHEDULE EVERY 1 DAY DO
 CALL actualizar_eventos_pasados ();

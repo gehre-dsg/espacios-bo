@@ -1,7 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 
 @Entity('espacios-publicos') // Entidad estatica
-@Index('idx_nombre', ['nombre'])
+@Index('idxespacios_nombre', ['nombre'])
+@Index('idxespacios_tipo', ['tipo'])
 export class EspacioPublico {
   @PrimaryGeneratedColumn()
   _id: number;
