@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EspacioPublicoService } from '../../services/espacios-publicos.service';
 import { RouterModule } from '@angular/router'; // IMPORTANTE: Asegúrate de importar RouterModule
+import { EspacioPublicoService } from '../../services/espacios-publicos.service';
 
 @Component({
   selector: 'app-espacios',
@@ -22,5 +22,9 @@ export class EspaciosComponent implements OnInit {
     } catch (error) {
       console.error('Error al cargar los espacios publicos:', error);
     }
+  }
+
+  selecEspacio(espacio: any) {
+    this.espacioPublicoService.setEspacioSeleccionado(espacio);
   }
 }

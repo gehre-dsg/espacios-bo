@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EspacioPublicoService } from '../../services/espacios-publicos.service';
+import { ReservaService } from '../../services/reserva.service';
 
 @Component({
   selector: 'app-formulario',
@@ -11,7 +12,7 @@ import { EspacioPublicoService } from '../../services/espacios-publicos.service'
   styleUrls: ['./formulario.component.scss'],
 })
 export class FormularioComponent implements OnInit {
-  espacio: any; // Para almacenar el espacio seleccionado
+  espacio: any;
   reserva = {
     nombre: '',
     ci: '',
@@ -22,33 +23,38 @@ export class FormularioComponent implements OnInit {
     tarjeta: '',
   };
 
-  constructor(private espacioService: EspacioPublicoService) {}
+  constructor(private espacioService: EspacioPublicoService, private reservaService: ReservaService) {}
 
   ngOnInit(): void {
-    // Obtener el espacio seleccionado desde el servicio
     this.espacio = this.espacioService.getEspacioSeleccionado();
+    console.log(this.espacio.data);
 
     if (!this.espacio) {
       console.error('No hay espacio seleccionado.');
-      // Redirigir o manejar el caso de no tener un espacio
     }
   }
 
-  reservar() {
-    // Aquí puedes enviar la información de la reserva al backend o procesarla localmente
+  ngSubmit() {
+    this.reservar();
+  }
+
+  async reservar() {
     console.log('Datos de la reserva:', this.reserva);
 
-    // Agrega el espacio seleccionado como parte de la reserva
     const reservaFinal = {
-      ...this.reserva,
-      espacio: this.espacio.nombre,
+      usuario: Number(this.reserva.ci),
+      espacio_publico: this.espacio._id,
+      fecha: this.reserva.fecha,
+      hora_inicio: '8:00:00',
+      hora_fin: '18:00:00'
     };
-
-    // Ejemplo de impresión en consola
-    console.log('Reserva final con espacio seleccionado:', reservaFinal);
-
-    // Aquí podrías hacer una llamada HTTP si tienes un servicio configurado
-    // Ejemplo:
-    // this.espacioService.realizarReserva(reservaFinal).then(...).catch(...);
+    console.log(reservaFinal);
+    try {
+      const response = await this.reservaService.postReserva(reservaFinal);
+      return response.data;
+    } catch (error: any){
+      console.log('No se pudo realizar la reserva');
+      throw error;
+    }
   }
 }
