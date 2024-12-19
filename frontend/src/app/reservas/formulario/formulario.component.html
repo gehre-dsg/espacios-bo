@@ -2,22 +2,34 @@
     <h2>Formulario de Reserva: {{ espacio.nombre }}</h2>
     <form (ngSubmit)="reservar()">
       <label for="ci">CI</label>
-      <input id="ci" type="text" required>
+      <input id="ci" type="text" required [(ngModel)]="reserva.ci" name="ci">
   
       <label for="tipo-evento">Tipo de Evento</label>
-      <input id="tipo-evento" type="text" required>
-
+      <input id="tipo-evento" type="text" required [(ngModel)]="reserva.tipoEvento" name="tipoEvento">
+  
       <label for="fecha">Fecha</label>
-      <input id="fecha" type="date" required>
+      <input id="fecha" type="date" required [(ngModel)]="reserva.fecha" name="fecha">
   
       <label for="tarjeta">Número de Tarjeta</label>
-      <input id="tarjeta" type="text" required>
+      <input id="tarjeta" type="text" required [(ngModel)]="reserva.tarjeta" name="tarjeta">
   
       <button type="submit">Reservar</button>
     </form>
   
     <!-- Mapa -->
-    <div id="map">
-        
+    <img 
+  src="https://maps.app.goo.gl/KrfoY58fV3FnyaaP7" 
+  alt="Mapa estático de La Paz"
+  style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+/>
+
+  
+    <!-- Mensaje de sobrepantalla -->
+    <div *ngIf="mostrarMensaje" class="overlay">
+      <div class="mensaje">
+        <img src="https://www.pngarts.com/files/9/Green-Check-Mark-PNG-Image.png" alt="Sobre Gigante" class="sobre-logo">
+        <p>Solicitud Enviada</p>
+      </div>
     </div>
   </div>
+  
