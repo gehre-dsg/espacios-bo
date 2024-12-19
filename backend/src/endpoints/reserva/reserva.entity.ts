@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Usuario } from '../usuario/usuario.entity';
 import { EspacioPublico } from '../espacio-publico/espacio-publico.entity';
+import { Estado } from '../estado/estado.entity';
 
 @Entity('reservas')
 export class Reserva {
@@ -23,4 +24,8 @@ export class Reserva {
 
   @Column({ type: 'time' })
   hora_fin: string;
+
+  @ManyToOne(() => Estado)
+  @JoinColumn({name: 'estado'})
+  estado: Estado;
 }

@@ -1,9 +1,9 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToOne, Index } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { Rol } from '../rol/rol.entity'
 import { Estado } from '../estado/estado.entity'
 
 @Entity('usuarios')
-@Index('idx_estado_rol', ['estado', 'rol'])
+@Index('idxusuarios_estado_rol', ['estado', 'rol'])
 export class Usuario {
   @PrimaryColumn()
   ci: number;
