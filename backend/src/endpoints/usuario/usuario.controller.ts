@@ -51,7 +51,6 @@ export class UsuarioController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard)
   async updatePartial(
     @Param('id') id: number,
     @Body() partialData: Partial<Usuario>,

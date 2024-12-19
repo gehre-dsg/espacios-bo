@@ -45,11 +45,9 @@ export class RegistroDatosComponent {
 
       console.log('Datos actualizados:', response);
 
-      // Limpiar localStorage después de la actualización exitosa
       localStorage.removeItem('ci_usuario');
 
-      // Redirigir al usuario después del registro
-      this.router.navigate(['/dashboard']); // Cambia esta ruta según corresponda
+      this.router.navigate(['/home']);
     } catch (error: any) {
       this.errorMessage = 'Ocurrió un error al actualizar los datos del usuario.';
       console.error('Error al actualizar datos:', error.message || error);

@@ -59,10 +59,13 @@ export class RegisterComponent {
       const response = await this.usuariosService.createUsuario(usuario);
       console.log('Usuario registrado:', response);
 
-      localStorage.setItem('ci_usuario', response.ci_usuario.toString());
-
-      //redirigir
-      this.router.navigate(['/registro-datos']);
+      if (response && response.ci) { // Asegúrate de que la respuesta tiene el campo esperado
+        console.log('Usuario registrado:', response);
+        localStorage.setItem('ci_usuario', response.ci.toString());
+        this.router.navigate(['/registro-datos']);
+      } else {
+        console.error('Registro exitoso, pero respuesta inesperada:', response);
+      }
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }
