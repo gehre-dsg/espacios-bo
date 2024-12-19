@@ -1,7 +1,7 @@
 -- Se maneja la eliminacion y creacion de tablas
 USE espacios_bo;
 
-DROP TABLE IF EXISTS `logs_cambios`;
+DROP TABLE IF EXISTS `logs-cambios`;
 
 DROP TABLE IF EXISTS `transferencias-reservas`;
 
@@ -136,12 +136,12 @@ CREATE TABLE `transferencias-reservas` (
     FOREIGN KEY (estado) REFERENCES `estados` (_id)
 );
 
-CREATE TABLE logs_cambios (
+CREATE TABLE `logs-cambios` (
     _id SERIAL PRIMARY KEY,
     tabla VARCHAR(50),
     operacion VARCHAR(10),
     registro_id INT,
-    usuario_ci VARCHAR(20),
+    email_usuario VARCHAR(255),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     datos_previos JSON,
     datos_nuevos JSON
