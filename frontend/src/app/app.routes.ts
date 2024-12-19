@@ -9,7 +9,7 @@ import { AdminComponent } from './admin/admin.component'; // Importar AdminCompo
 import { ReservasComponent } from './reservas/reservas.component';
 import { FormularioComponent } from './reservas/formulario/formulario.component';
 import { EspaciosComponent } from './reservas/espacios/espacios.component';
-
+import { CalendarioEventosComponent } from './home/calendario-eventos/calendario-eventos.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,7 +23,9 @@ export const routes: Routes = [
   { path: 'reservas', component: ReservasComponent },
   { path: 'reservas/:tipo', component: EspaciosComponent },
   { path: 'reservas/formulario/:id', component: FormularioComponent },
-  { path: '', redirectTo: '/reservas', pathMatch: 'full' }
+  { path: '', redirectTo: '/reservas', pathMatch: 'full' },
+  { path: '', component: ReservasComponent },
+  { path: 'calendario', component: CalendarioEventosComponent },
 ];
 
 
