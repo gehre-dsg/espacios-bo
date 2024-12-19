@@ -12,9 +12,8 @@ import { EspacioPublicoService } from './../services/espacios-publicos.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit{
-  constructor(private router: Router,private espacioServicio:EspacioPublicoService) {
-    this.getUsuarios();
+export class HomeComponent {
+  constructor(private router: Router) {
   }
 
   highlights = [
@@ -64,25 +63,6 @@ export class HomeComponent implements OnInit{
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  async getUsuarios() {
-    try {
-      const token = 'SuperToken';
-      const response = await axios.get('http://localhost:3000/usuarios/3', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      console.log('Usuarios obtenidos:', response.data);
-    } catch (e) {
-      const error = e as any;
-      if (error.response && error.response.data) {
-        console.error('Error al obtener usuarios:', error.response.data);
-      } else {
-        console.error('Error al obtener usuarios:', error.message);
-      }
     }
   }
 
