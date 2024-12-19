@@ -1,5 +1,4 @@
 <div class="formulario-container">
-<<<<<<< HEAD
     <h2>Formulario de Reserva: {{ espacio.nombre }}</h2>
     <form (ngSubmit)="reservar()">
       <label for="ci">CI</label>
@@ -18,82 +17,7 @@
     </form>
   
     <!-- Mapa -->
-    <div id="map"></div>
+    <div id="map">
+        
+    </div>
   </div>
-  
-=======
-  <h2>Formulario de Reserva: {{ espacio?.nombre }}</h2>
-
-  <!-- Formulario Angular -->
-  <form (ngSubmit)="reservar()" #formReserva="ngForm">
-    <label for="nombre">Nombre</label>
-    <input
-      id="nombre"
-      type="text"
-      required
-      [(ngModel)]="reserva.nombre"
-      name="nombre"
-    />
-
-    <label for="ci">CI</label>
-    <input
-      id="ci"
-      type="text"
-      required
-      [(ngModel)]="reserva.ci"
-      name="ci"
-    />
-
-    <label for="otb">Otb</label>
-    <input
-      id="otb"
-      type="text"
-      required
-      [(ngModel)]="reserva.otb"
-      name="otb"
-    />
-
-    <label for="tipo-evento">Tipo de Evento</label>
-    <input
-      id="tipo-evento"
-      type="text"
-      required
-      [(ngModel)]="reserva.tipoEvento"
-      name="tipoEvento"
-    />
-
-    <label for="sector">Sector</label>
-    <input
-      id="sector"
-      type="text"
-      required
-      [(ngModel)]="reserva.sector"
-      name="sector"
-    />
-
-    <label for="fecha">Fecha</label>
-    <input
-      id="fecha"
-      type="date"
-      required
-      [(ngModel)]="reserva.fecha"
-      name="fecha"
-    />
-
-    <label for="tarjeta">Número de Tarjeta</label>
-    <input
-      id="tarjeta"
-      type="text"
-      required
-      [(ngModel)]="reserva.tarjeta"
-      name="tarjeta"
-    />
-
-    <button type="submit" [disabled]="formReserva.invalid">Reservar</button>
-  </form>
-  
-  <!-- Mapa -->
-  <div id="map" style="height: 500px;"></div>
-
-</div>
->>>>>>> 71ac2e957f0b2fdd0b5d702f560617e29a8dceaf
