@@ -38,8 +38,8 @@ export class LoginComponent {
 
       // Guarda el token en localStorage
       this.authService.saveToken(response.access_token);
-
-      // Redirige a una página protegida (por ejemplo, `/reservas`)
+      console.log('Inicio de sesion exitoso para el usuario:', this.loginData.email);
+      console.log('Login exitoso.');
       this.router.navigate(['/home']);
     } catch (error) {
       // Maneja errores y muestra un mensaje de error
@@ -55,9 +55,8 @@ export class LoginComponent {
     }
 
     try {
-      // Aquí puedes implementar la lógica de registro
       console.log('Registro exitoso:', this.registerData);
-      this.isRegistering = false; // Vuelve al formulario de login
+      this.isRegistering = false;
     } catch (error) {
       this.errorMessage = 'Error al registrar usuario.';
       console.error('Error en el registro:', error);
