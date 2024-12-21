@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryColumn, JoinColumn, ManyToOne } from "typeorm";
 import { Estado } from "src/estado/estado.entity";
+import { Rol } from "src/rol/rol.entity";
 
 @Entity()
 export class Usuario {
@@ -25,6 +26,10 @@ export class Usuario {
 	telefono: string;
 
 	@ManyToOne(() => Estado)
-	@JoinColumn({ name: 'estado' })
+	@JoinColumn({ name: 'estado_id' })
 	estado: Estado;
+
+	@ManyToOne(() => Rol)
+	@JoinColumn({ name: 'rol_id' })
+	rol: Rol;
 }
