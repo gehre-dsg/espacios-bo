@@ -26,10 +26,10 @@ export class Usuario {
 	telefono: string;
 
 	@ManyToOne(() => Estado)
-	@JoinColumn({ name: 'estado_id' })
-	estado: Estado;
+	@JoinColumn({ name: 'estado_id'})
+	estado_id: Estado;
 
 	@ManyToOne(() => Rol)
 	@JoinColumn({ name: 'rol_id' })
-	rol: Rol;
+	rol_id: Rol;
 }
